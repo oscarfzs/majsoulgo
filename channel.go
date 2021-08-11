@@ -24,11 +24,6 @@ var (
 	TIMEOUT_INTERVAL = 2 //seconds
 )
 
-type ChannelMethods interface {
-	Connect(url string)
-	KeepAlive(ping int, timeout int)
-}
-
 type MajsoulChannel struct {
 	Connection *websocket.Conn
 	Url        string
