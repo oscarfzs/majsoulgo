@@ -17,7 +17,7 @@ func TestConnect(t *testing.T) {
 	go channel.Connect(url)
 	time.Sleep(6 * time.Second)
 	channel.Close()
-	err = channel.ExitStatus()
+	err = channel.ExitValue()
 
 	if err != nil {
 		t.Errorf(err.Error())

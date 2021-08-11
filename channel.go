@@ -31,14 +31,24 @@ type MajsoulChannel struct {
 	mutexMsgIndex sync.Mutex
 	mutexMsgWrite sync.Mutex
 
-	msgIndex int16
-
+	//Requests sent to the server must be indexed. When a request is sent
+	//to the server, the second byte of the message must contain the msgIndex.
+	//That way, responses received from the server can be traced back to the
+	//request that initiated the response.
+	msgIndex  int16
 	responses map[int16](chan []byte)
 
 	timeLastPingSent     time.Time
 	timeLastPongReceived time.Time
 	timeoutTimer         *time.Timer
 
+	//`MajsoulChannel.close` is a buffered channel of capacity 1 and does two tasks
+	//First, it acts as a signaler to any goroutines that the channel
+	//has been closed. Whenever an error value is sent through the channel, that
+	//indicates the channel has been closed.
+	//
+	//Second, it provides a way to retrieve any errors that resulted in
+	//the termination of the channel's connection.
 	close chan error
 }
 
@@ -136,23 +146,17 @@ func (ch *MajsoulChannel) Close() {
 }
 
 func (ch *MajsoulChannel) IsClosed() bool {
-	for {
-		select {
-		case err := <-ch.close:
-			ch.close <- err
-			return true
-		default:
-			return false
-		}
-	}
+	//A channel with length 1 indicates a stored error and therefore
+	//that the channel was closed
+	return len(ch.close) == 1
 }
 
 /*
-ExitStatus is the function for user applications to retrieve the error that
+ExitValue is the function for user applications to retrieve the error that
 caused the MajsoulChannel to close. A nil value means that the channel was closed
 by the user.
 */
-func (ch *MajsoulChannel) ExitStatus() error {
+func (ch *MajsoulChannel) ExitValue() error {
 	err := <-ch.close
 	ch.close <- err
 	return err
@@ -162,7 +166,7 @@ func (ch *MajsoulChannel) ExitStatus() error {
 Looping function that sends ping messages to the server every PING_INTERVAL seconds.
 A timeout is implemented such that if the corresponding pong message is
 not received within TIMEOUT_INTERVAL seconds, then the MajsoulChannel is automatically
-closed
+closed.
 */
 func (ch *MajsoulChannel) keepAlive() {
 	interrupt := make(chan os.Signal, 1)
