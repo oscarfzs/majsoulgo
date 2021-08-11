@@ -39,8 +39,7 @@ type MajsoulChannel struct {
 	timeLastPongReceived time.Time
 	timeoutTimer         *time.Timer
 
-	close     chan error
-	interrupt chan os.Signal
+	close chan error
 }
 
 /*
@@ -107,15 +106,15 @@ func (ch *MajsoulChannel) Connect(url string) {
 
 	ch.Connection.SetPongHandler(ch.pongHandler)
 
-	ch.interrupt = make(chan os.Signal, 1)
-	signal.Notify(ch.interrupt, os.Interrupt)
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, os.Interrupt)
 
 	go ch.listen()
 	go ch.keepAlive()
 
 	for {
 		select {
-		case <-ch.interrupt:
+		case <-interrupt:
 			ch.close <- errors.New("connection terminated by interrupt signal")
 			return
 		case err := <-ch.close:
@@ -166,15 +165,19 @@ not received within TIMEOUT_INTERVAL seconds, then the MajsoulChannel is automat
 closed
 */
 func (ch *MajsoulChannel) keepAlive() {
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, os.Interrupt)
+
 	ticker := time.NewTicker(time.Duration(PING_INTERVAL) * time.Second)
 	defer ticker.Stop()
 
 	var timer (<-chan time.Time)
 	for {
 		select {
-		case <-ch.interrupt:
+		case <-interrupt:
 			return
-		case <-ch.close:
+		case err := <-ch.close:
+			ch.close <- err
 			return
 		case <-ticker.C:
 			log.Println("Ping sent")
@@ -202,16 +205,18 @@ func (ch *MajsoulChannel) keepAlive() {
 UNFINISHED
 */
 func (ch *MajsoulChannel) listen() {
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, os.Interrupt)
 	for {
 		select {
-		case <-ch.interrupt:
+		case <-interrupt:
 			return
-		case <-ch.close:
+		case err := <-ch.close:
+			ch.close <- err
 			return
 		default:
 			msgType, m, err := ch.Connection.ReadMessage()
 			if err != nil {
-				ch.close <- err
 				return
 			}
 			if msgType == websocket.TextMessage {

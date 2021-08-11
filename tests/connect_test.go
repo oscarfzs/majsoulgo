@@ -3,6 +3,7 @@ package majsoultest
 import (
 	"majsoulgo"
 	"testing"
+	"time"
 )
 
 func TestConnect(t *testing.T) {
@@ -13,8 +14,9 @@ func TestConnect(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	channel.Connect(url)
-
+	go channel.Connect(url)
+	time.Sleep(6 * time.Second)
+	channel.Close()
 	err = channel.ExitStatus()
 
 	if err != nil {
