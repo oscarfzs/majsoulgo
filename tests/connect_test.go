@@ -13,7 +13,9 @@ func TestConnect(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	err = channel.Connect(url)
+	channel.Connect(url)
+
+	err = channel.ExitStatus()
 
 	if err != nil {
 		t.Errorf(err.Error())
