@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"log"
+	"math"
 	"os"
 	"os/signal"
 	"sync"
@@ -26,10 +27,10 @@ var (
 
 type MajsoulChannel struct {
 	Connection *websocket.Conn
-	Url        string
 
-	mutexMsgIndex sync.Mutex
-	mutexMsgWrite sync.Mutex
+	mutexMsgIndex *sync.Mutex
+	mutexMsgWrite *sync.Mutex
+	mutexMsgRead  *sync.Mutex
 
 	//Requests sent to the server must be indexed. When a request is sent
 	//to the server, the second byte of the message must contain the msgIndex.
@@ -42,33 +43,50 @@ type MajsoulChannel struct {
 	timeLastPongReceived time.Time
 	timeoutTimer         *time.Timer
 
-	//`MajsoulChannel.close` is a buffered channel of capacity 1 and does two tasks
+	//`MajsoulChannel.stop` is a buffered channel of capacity 1 and does two tasks
 	//First, it acts as a signaler to any goroutines that the channel
 	//has been closed. Whenever an error value is sent through the channel, that
 	//indicates the channel has been closed.
 	//
 	//Second, it provides a way to retrieve any errors that resulted in
 	//the termination of the channel's connection.
-	close chan error
+	stop chan error
+
+	open chan struct{}
+}
+
+func NewMajsoulChannel() *MajsoulChannel {
+	m := new(MajsoulChannel)
+
+	m.mutexMsgIndex = new(sync.Mutex)
+	m.mutexMsgRead = new(sync.Mutex)
+	m.mutexMsgWrite = new(sync.Mutex)
+
+	m.responses = make(map[int16](chan []byte))
+	m.open = make(chan struct{}, 1)
+	m.stop = make(chan error, 1)
+	return m
 }
 
 /*
 UNFINISHED
 */
-func (ch *MajsoulChannel) Send(msg []byte) {
-	ch.mutexMsgIndex.Lock()
+func (m *MajsoulChannel) Send(msg []byte) {
+	//wait until the channel has successfully opened a connection
+	s := <-m.open
+	m.open <- s
 
-	index := ch.msgIndex
-	ch.msgIndex = (ch.msgIndex + int16(1)) % int16(MAX_MSG_INDEX)
+	m.mutexMsgIndex.Lock()
+	index := m.msgIndex
+	m.msgIndex = int16(math.Mod(float64(m.msgIndex+int16(1)), float64(MAX_MSG_INDEX)))
+	m.mutexMsgIndex.Unlock()
 
-	ch.mutexMsgIndex.Unlock()
-
-	ch.responses[index] = make(chan []byte)
+	m.responses[index] = make(chan []byte)
 
 	h1 := make([]byte, 1)
 	h2 := make([]byte, 2)
 
-	binary.LittleEndian.PutUint16(h1, uint16(MSG_TYPE_REQUEST))
+	h1[0] = byte(MSG_TYPE_REQUEST)
 	binary.LittleEndian.PutUint16(h2, uint16(index))
 
 	var msgBuffer bytes.Buffer
@@ -76,11 +94,10 @@ func (ch *MajsoulChannel) Send(msg []byte) {
 	msgBuffer.Write(h2)
 	msgBuffer.Write(msg)
 
-	ch.mutexMsgWrite.Lock()
-
-	err := ch.Connection.WriteMessage(websocket.TextMessage, msgBuffer.Bytes())
-
-	ch.mutexMsgWrite.Unlock()
+	m.mutexMsgWrite.Lock()
+	log.Println("Sending message", msgBuffer.Bytes())
+	err := m.Connection.WriteMessage(websocket.TextMessage, msgBuffer.Bytes())
+	m.mutexMsgWrite.Unlock()
 
 	if err != nil {
 		log.Println("ERROR: ", err)
@@ -98,21 +115,19 @@ connection.
 After successfully connecting, the channel can be closed by calling MajsoulChannel.Close()
 */
 func (m *MajsoulChannel) Connect(url string) {
-	m.Url = url
-	m.responses = make(map[int16](chan []byte))
-	m.close = make(chan error, 1)
 
 	var err error
 	m.Connection, _, err = websocket.DefaultDialer.Dial(url, nil)
 
 	if err != nil {
-		m.close <- err
+		m.stop <- err
 		return
 	}
 
 	defer m.Connection.Close()
 
 	log.Println("Successfully connected to", url)
+	m.open <- struct{}{}
 
 	m.Connection.SetPongHandler(m.pongHandler)
 
@@ -125,10 +140,10 @@ func (m *MajsoulChannel) Connect(url string) {
 	for {
 		select {
 		case <-interrupt:
-			m.close <- errors.New("connection terminated by interrupt signal")
+			m.stop <- errors.New("connection terminated by interrupt signal")
 			return
-		case err := <-m.close:
-			m.close <- err
+		case err := <-m.stop:
+			m.stop <- err
 			return
 		}
 	}
@@ -141,14 +156,14 @@ channel was closed by the application and not due to encountering any errors.
 */
 func (m *MajsoulChannel) Close() {
 	if !m.IsClosed() {
-		m.close <- nil
+		m.stop <- nil
 	}
 }
 
 func (m *MajsoulChannel) IsClosed() bool {
 	//A channel with length 1 indicates a stored error and therefore
 	//that the channel was closed
-	return len(m.close) == 1
+	return len(m.stop) == 1
 }
 
 /*
@@ -157,8 +172,8 @@ caused the MajsoulChannel to close. A nil value means that the channel was close
 by the user.
 */
 func (m *MajsoulChannel) ExitValue() error {
-	err := <-m.close
-	m.close <- err
+	err := <-m.stop
+	m.stop <- err
 	return err
 }
 
@@ -180,8 +195,8 @@ func (m *MajsoulChannel) keepAlive() {
 		select {
 		case <-interrupt:
 			return
-		case err := <-m.close:
-			m.close <- err
+		case err := <-m.stop:
+			m.stop <- err
 			return
 		case <-ticker.C:
 			log.Println("Ping sent")
@@ -189,16 +204,15 @@ func (m *MajsoulChannel) keepAlive() {
 			err := m.Connection.WriteMessage(websocket.PingMessage, []byte("Ping"))
 			m.mutexMsgWrite.Unlock()
 			if err != nil {
-				m.close <- err
+				m.stop <- err
 				return
 			}
 			m.timeLastPingSent = time.Now()
-			m.timeoutTimer = time.NewTimer(time.Duration(TIMEOUT_INTERVAL) * time.Second)
-			timer = m.timeoutTimer.C
+			timer = time.After(time.Duration(TIMEOUT_INTERVAL) * time.Second)
 		case <-timer:
 			if time.Since(m.timeLastPongReceived).Seconds() > float64(TIMEOUT_INTERVAL) {
 				err := errors.New("timeout: pong not received within timeout duration")
-				m.close <- err
+				m.stop <- err
 				return
 			}
 		}
@@ -215,17 +229,20 @@ func (m *MajsoulChannel) listen() {
 		select {
 		case <-interrupt:
 			return
-		case err := <-m.close:
-			m.close <- err
+		case err := <-m.stop:
+			m.stop <- err
 			return
 		default:
-			msgType, m, err := m.Connection.ReadMessage()
+			m.mutexMsgRead.Lock()
+			_, r, err := m.Connection.NextReader()
+			m.mutexMsgRead.Unlock()
 			if err != nil {
 				return
 			}
-			if msgType == websocket.TextMessage {
-				log.Println("Received message: ", string(m))
-			}
+
+			b := bytes.Buffer{}
+			b.ReadFrom(r)
+			log.Println("Received message: ", b.String())
 		}
 	}
 }

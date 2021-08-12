@@ -7,7 +7,7 @@ import (
 )
 
 func TestConnect(t *testing.T) {
-	channel := majsoulgo.MajsoulChannel{}
+	channel := majsoulgo.NewMajsoulChannel()
 	url, err := majsoulgo.GetContestManagementServerUrl()
 
 	if err != nil {
