@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"errors"
 	"log"
-	"math"
 	"os"
 	"os/signal"
 	"sync"
@@ -41,7 +40,6 @@ type MajsoulChannel struct {
 
 	timeLastPingSent     time.Time
 	timeLastPongReceived time.Time
-	timeoutTimer         *time.Timer
 
 	//`MajsoulChannel.stop` is a buffered channel of capacity 1 and does two tasks
 	//First, it acts as a signaler to any goroutines that the channel
@@ -78,7 +76,7 @@ func (m *MajsoulChannel) Send(msg []byte) {
 
 	m.mutexMsgIndex.Lock()
 	index := m.msgIndex
-	m.msgIndex = int16(math.Mod(float64(m.msgIndex+int16(1)), float64(MAX_MSG_INDEX)))
+	m.msgIndex = int16(MAX_MSG_INDEX) % (index + 1)
 	m.mutexMsgIndex.Unlock()
 
 	m.responses[index] = make(chan []byte)
@@ -95,8 +93,8 @@ func (m *MajsoulChannel) Send(msg []byte) {
 	msgBuffer.Write(msg)
 
 	m.mutexMsgWrite.Lock()
-	log.Println("Sending message", msgBuffer.Bytes())
 	err := m.Connection.WriteMessage(websocket.TextMessage, msgBuffer.Bytes())
+	log.Println("Sent message", msgBuffer.String())
 	m.mutexMsgWrite.Unlock()
 
 	if err != nil {
@@ -237,6 +235,9 @@ func (m *MajsoulChannel) listen() {
 			_, r, err := m.Connection.NextReader()
 			m.mutexMsgRead.Unlock()
 			if err != nil {
+				if !m.IsClosed() {
+					m.stop <- err
+				}
 				return
 			}
 
