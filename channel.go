@@ -97,38 +97,38 @@ connection.
 
 After successfully connecting, the channel can be closed by calling MajsoulChannel.Close()
 */
-func (ch *MajsoulChannel) Connect(url string) {
-	ch.Url = url
-	ch.responses = make(map[int16](chan []byte))
-	ch.close = make(chan error, 1)
+func (m *MajsoulChannel) Connect(url string) {
+	m.Url = url
+	m.responses = make(map[int16](chan []byte))
+	m.close = make(chan error, 1)
 
 	var err error
-	ch.Connection, _, err = websocket.DefaultDialer.Dial(url, nil)
+	m.Connection, _, err = websocket.DefaultDialer.Dial(url, nil)
 
 	if err != nil {
-		ch.close <- err
+		m.close <- err
 		return
 	}
 
-	defer ch.Connection.Close()
+	defer m.Connection.Close()
 
 	log.Println("Successfully connected to", url)
 
-	ch.Connection.SetPongHandler(ch.pongHandler)
+	m.Connection.SetPongHandler(m.pongHandler)
 
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	go ch.listen()
-	go ch.keepAlive()
+	go m.listen()
+	go m.keepAlive()
 
 	for {
 		select {
 		case <-interrupt:
-			ch.close <- errors.New("connection terminated by interrupt signal")
+			m.close <- errors.New("connection terminated by interrupt signal")
 			return
-		case err := <-ch.close:
-			ch.close <- err
+		case err := <-m.close:
+			m.close <- err
 			return
 		}
 	}
@@ -139,16 +139,16 @@ Closes the channel. The way channels are closed is by passing an error
 into the close channel. A nil value passed into the channel indicates that the
 channel was closed by the application and not due to encountering any errors.
 */
-func (ch *MajsoulChannel) Close() {
-	if !ch.IsClosed() {
-		ch.close <- nil
+func (m *MajsoulChannel) Close() {
+	if !m.IsClosed() {
+		m.close <- nil
 	}
 }
 
-func (ch *MajsoulChannel) IsClosed() bool {
+func (m *MajsoulChannel) IsClosed() bool {
 	//A channel with length 1 indicates a stored error and therefore
 	//that the channel was closed
-	return len(ch.close) == 1
+	return len(m.close) == 1
 }
 
 /*
@@ -156,9 +156,9 @@ ExitValue is the function for user applications to retrieve the error that
 caused the MajsoulChannel to close. A nil value means that the channel was closed
 by the user.
 */
-func (ch *MajsoulChannel) ExitValue() error {
-	err := <-ch.close
-	ch.close <- err
+func (m *MajsoulChannel) ExitValue() error {
+	err := <-m.close
+	m.close <- err
 	return err
 }
 
@@ -168,7 +168,7 @@ A timeout is implemented such that if the corresponding pong message is
 not received within TIMEOUT_INTERVAL seconds, then the MajsoulChannel is automatically
 closed.
 */
-func (ch *MajsoulChannel) keepAlive() {
+func (m *MajsoulChannel) keepAlive() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
@@ -180,25 +180,25 @@ func (ch *MajsoulChannel) keepAlive() {
 		select {
 		case <-interrupt:
 			return
-		case err := <-ch.close:
-			ch.close <- err
+		case err := <-m.close:
+			m.close <- err
 			return
 		case <-ticker.C:
 			log.Println("Ping sent")
-			ch.mutexMsgWrite.Lock()
-			err := ch.Connection.WriteMessage(websocket.PingMessage, []byte("Ping"))
-			ch.mutexMsgWrite.Unlock()
+			m.mutexMsgWrite.Lock()
+			err := m.Connection.WriteMessage(websocket.PingMessage, []byte("Ping"))
+			m.mutexMsgWrite.Unlock()
 			if err != nil {
-				ch.close <- err
+				m.close <- err
 				return
 			}
-			ch.timeLastPingSent = time.Now()
-			ch.timeoutTimer = time.NewTimer(time.Duration(TIMEOUT_INTERVAL) * time.Second)
-			timer = ch.timeoutTimer.C
+			m.timeLastPingSent = time.Now()
+			m.timeoutTimer = time.NewTimer(time.Duration(TIMEOUT_INTERVAL) * time.Second)
+			timer = m.timeoutTimer.C
 		case <-timer:
-			if time.Since(ch.timeLastPongReceived).Seconds() > float64(TIMEOUT_INTERVAL) {
+			if time.Since(m.timeLastPongReceived).Seconds() > float64(TIMEOUT_INTERVAL) {
 				err := errors.New("timeout: pong not received within timeout duration")
-				ch.close <- err
+				m.close <- err
 				return
 			}
 		}
@@ -208,18 +208,18 @@ func (ch *MajsoulChannel) keepAlive() {
 /*
 UNFINISHED
 */
-func (ch *MajsoulChannel) listen() {
+func (m *MajsoulChannel) listen() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 	for {
 		select {
 		case <-interrupt:
 			return
-		case err := <-ch.close:
-			ch.close <- err
+		case err := <-m.close:
+			m.close <- err
 			return
 		default:
-			msgType, m, err := ch.Connection.ReadMessage()
+			msgType, m, err := m.Connection.ReadMessage()
 			if err != nil {
 				return
 			}
@@ -230,8 +230,8 @@ func (ch *MajsoulChannel) listen() {
 	}
 }
 
-func (ch *MajsoulChannel) pongHandler(appData string) error {
-	ch.timeLastPongReceived = time.Now()
+func (m *MajsoulChannel) pongHandler(appData string) error {
+	m.timeLastPongReceived = time.Now()
 	log.Println("Pong received")
 	return nil
 }
