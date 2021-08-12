@@ -232,7 +232,7 @@ func (m *MajsoulChannel) listen() {
 			return
 		default:
 			m.mutexMsgRead.Lock()
-			_, r, err := m.Connection.NextReader()
+			_, msg, err := m.Connection.ReadMessage()
 			m.mutexMsgRead.Unlock()
 			if err != nil {
 				if !m.IsClosed() {
@@ -241,9 +241,7 @@ func (m *MajsoulChannel) listen() {
 				return
 			}
 
-			b := bytes.Buffer{}
-			b.ReadFrom(r)
-			log.Println("Received message: ", b.String())
+			log.Println("Received message: ", string(msg))
 		}
 	}
 }
