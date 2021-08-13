@@ -37,7 +37,7 @@ func TestSendMessage(t *testing.T) {
 
 	time.Sleep(6 * time.Second)
 
-	m.Close(nil)
+	m.Close()
 
 	err = m.ExitValue()
 

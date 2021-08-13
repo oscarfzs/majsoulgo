@@ -22,14 +22,14 @@ var (
 
 	PING_INTERVAL    = 3 //seconds
 	TIMEOUT_INTERVAL = 2 //seconds
+
+	OUTGOING_BUFFER_LENGTH = 20
 )
 
 type MajsoulChannel struct {
 	Connection *websocket.Conn
 
 	mutexMsgIndex *sync.Mutex
-	mutexMsgWrite *sync.Mutex
-	mutexMsgRead  *sync.Mutex
 
 	//Requests sent to the server must be indexed. When a request is sent
 	//to the server, the second byte of the message must contain the msgIndex.
@@ -40,6 +40,12 @@ type MajsoulChannel struct {
 
 	timeLastPingSent     time.Time
 	timeLastPongReceived time.Time
+
+	//Buffered channel for outgoing messages
+	outgoing chan struct {
+		MsgType int
+		Msg     []byte
+	}
 
 	//`MajsoulChannel.stop` is a buffered channel of capacity 1 and does two tasks
 	//First, it acts as a signaler to any goroutines that the channel
@@ -57,49 +63,16 @@ func NewMajsoulChannel() *MajsoulChannel {
 	m := new(MajsoulChannel)
 
 	m.mutexMsgIndex = new(sync.Mutex)
-	m.mutexMsgRead = new(sync.Mutex)
-	m.mutexMsgWrite = new(sync.Mutex)
-
 	m.responses = make(map[int16](chan []byte))
+
+	m.outgoing = make(chan struct {
+		MsgType int
+		Msg     []byte
+	}, OUTGOING_BUFFER_LENGTH)
+
 	m.open = make(chan struct{}, 1)
 	m.stop = make(chan error, 1)
 	return m
-}
-
-/*
-UNFINISHED
-*/
-func (m *MajsoulChannel) Send(msg []byte) {
-	//wait until the channel has successfully opened a connection
-	s := <-m.open
-	m.open <- s
-
-	m.mutexMsgIndex.Lock()
-	index := m.msgIndex
-	m.msgIndex = int16(MAX_MSG_INDEX) % (index + 1)
-	m.mutexMsgIndex.Unlock()
-
-	m.responses[index] = make(chan []byte)
-
-	h1 := make([]byte, 1)
-	h2 := make([]byte, 2)
-
-	h1[0] = byte(MSG_TYPE_REQUEST)
-	binary.LittleEndian.PutUint16(h2, uint16(index))
-
-	var msgBuffer bytes.Buffer
-	msgBuffer.Write(h1)
-	msgBuffer.Write(h2)
-	msgBuffer.Write(msg)
-
-	m.mutexMsgWrite.Lock()
-	err := m.Connection.WriteMessage(websocket.TextMessage, msgBuffer.Bytes())
-	log.Println("Sent message", msgBuffer.String())
-	m.mutexMsgWrite.Unlock()
-
-	if err != nil {
-		log.Println("ERROR: ", err)
-	}
 }
 
 /*
@@ -113,7 +86,6 @@ connection.
 After successfully connecting, the channel can be closed by calling MajsoulChannel.Close()
 */
 func (m *MajsoulChannel) Connect(url string) {
-
 	var err error
 	m.Connection, _, err = websocket.DefaultDialer.Dial(url, nil)
 
@@ -132,8 +104,9 @@ func (m *MajsoulChannel) Connect(url string) {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	go m.listen()
+	go m.recvMsg()
 	go m.keepAlive()
+	go m.sendMsg()
 
 	for {
 		select {
@@ -145,6 +118,31 @@ func (m *MajsoulChannel) Connect(url string) {
 			return
 		}
 	}
+}
+
+func (m *MajsoulChannel) Send(msg []byte) {
+	m.mutexMsgIndex.Lock()
+	index := m.msgIndex
+	m.msgIndex = int16(MAX_MSG_INDEX) % (index + 1)
+	m.mutexMsgIndex.Unlock()
+
+	m.responses[index] = make(chan []byte)
+
+	h1 := make([]byte, 1)
+	h2 := make([]byte, 2)
+
+	h1[0] = byte(MSG_TYPE_REQUEST)
+	binary.LittleEndian.PutUint16(h2, uint16(index))
+
+	var msgBuffer bytes.Buffer
+	msgBuffer.Write(h1)
+	msgBuffer.Write(h2)
+	msgBuffer.Write(msg)
+
+	m.outgoing <- struct {
+		MsgType int
+		Msg     []byte
+	}{websocket.BinaryMessage, msgBuffer.Bytes()}
 }
 
 /*
@@ -197,30 +195,55 @@ func (m *MajsoulChannel) keepAlive() {
 			m.stop <- err
 			return
 		case <-ticker.C:
-			log.Println("Ping sent")
-			m.mutexMsgWrite.Lock()
-			err := m.Connection.WriteMessage(websocket.PingMessage, []byte("Ping"))
-			m.mutexMsgWrite.Unlock()
-			if err != nil {
-				m.stop <- err
-				return
-			}
-			m.timeLastPingSent = time.Now()
+			m.outgoing <- struct {
+				MsgType int
+				Msg     []byte
+			}{websocket.PingMessage, nil}
+
 			timer = time.After(time.Duration(TIMEOUT_INTERVAL) * time.Second)
 		case <-timer:
 			if time.Since(m.timeLastPongReceived).Seconds() > float64(TIMEOUT_INTERVAL) {
-				err := errors.New("timeout: pong not received within timeout duration")
-				m.stop <- err
+				m.stop <- errors.New("timeout: pong not received within timeout duration")
 				return
 			}
 		}
 	}
 }
 
-/*
-UNFINISHED
-*/
-func (m *MajsoulChannel) listen() {
+func (m *MajsoulChannel) sendMsg() {
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, os.Interrupt)
+
+	for {
+		select {
+		case <-interrupt:
+			return
+		case err := <-m.stop:
+			m.stop <- err
+			return
+		default:
+			o := <-m.outgoing
+			err := m.Connection.WriteMessage(o.MsgType, o.Msg)
+			if err != nil {
+				m.stop <- err
+				return
+			}
+			switch o.MsgType {
+			case websocket.PingMessage:
+				m.timeLastPingSent = time.Now()
+				log.Println("Ping sent")
+			case websocket.PongMessage:
+				log.Println("Pong sent")
+			case websocket.CloseMessage:
+				log.Println("Close sent")
+			default:
+				log.Println("Message sent: ", o.Msg)
+			}
+		}
+	}
+}
+
+func (m *MajsoulChannel) recvMsg() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 	for {
@@ -231,9 +254,7 @@ func (m *MajsoulChannel) listen() {
 			m.stop <- err
 			return
 		default:
-			m.mutexMsgRead.Lock()
 			_, msg, err := m.Connection.ReadMessage()
-			m.mutexMsgRead.Unlock()
 			if err != nil {
 				if !m.IsClosed() {
 					m.stop <- err
@@ -241,7 +262,7 @@ func (m *MajsoulChannel) listen() {
 				return
 			}
 
-			log.Println("Received message: ", string(msg))
+			log.Println("Received message: ", msg)
 		}
 	}
 }
