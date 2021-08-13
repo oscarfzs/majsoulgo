@@ -55,8 +55,6 @@ type MajsoulChannel struct {
 	//Second, it provides a way to retrieve any errors that resulted in
 	//the termination of the channel's connection.
 	stop chan error
-
-	open chan struct{}
 }
 
 func NewMajsoulChannel() *MajsoulChannel {
@@ -70,7 +68,6 @@ func NewMajsoulChannel() *MajsoulChannel {
 		Msg     []byte
 	}, OUTGOING_BUFFER_LENGTH)
 
-	m.open = make(chan struct{}, 1)
 	m.stop = make(chan error, 1)
 	return m
 }
@@ -97,7 +94,6 @@ func (m *MajsoulChannel) Connect(url string) {
 	defer m.Connection.Close()
 
 	log.Println("Successfully connected to", url)
-	m.open <- struct{}{}
 
 	m.Connection.SetPongHandler(m.pongHandler)
 
