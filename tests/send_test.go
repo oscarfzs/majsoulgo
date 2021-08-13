@@ -3,7 +3,7 @@ package majsoultest
 import (
 	"log"
 	"majsoulgo"
-	"majsoulgo/proto/dhs"
+	"majsoulgo/dhs"
 	"testing"
 	"time"
 

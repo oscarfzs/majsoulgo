@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "proto/dhs";
+option go_package = "dhs";
 
 package lq;
 
