@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func TestCallRpc(t *testing.T) {
+func TestReconnect(t *testing.T) {
 	client := dhs.NewContestManagerClient()
 	url, err := majsoulgo.GetContestManagementServerUrl()
 	if err != nil {
@@ -22,51 +22,40 @@ func TestCallRpc(t *testing.T) {
 		Type:        10,
 		AccessToken: "temp",
 	}
-	res, err := client.Oauth2LoginContestManager(login)
+	_, err = client.Oauth2LoginContestManager(login)
 	if err != nil {
-		t.Error(err)
+		log.Println(err)
 	}
-
-	log.Println(res)
 
 	time.Sleep(6 * time.Second)
 
-	client.Close()
+	client.Close(nil)
+	log.Println("CLOSING")
 
 	err = client.ExitValue()
-
 	if err != nil {
 		log.Println("error: ", err)
 	}
-}
 
-func TestSendMessage(t *testing.T) {
-	m := majsoulgo.NewMajsoulChannel()
-	url, err := majsoulgo.GetContestManagementServerUrl()
-	if err != nil {
-		log.Printf("unable to find server")
-		return
-	}
+	log.Println("RECONNECTING")
 
-	login := &dhs.ReqContestManageOauth2Login{
+	go client.Connect(url)
+
+	login = &dhs.ReqContestManageOauth2Login{
 		Type:        10,
-		AccessToken: "213474b4-d17f-4cb6-9552-aaca726fda2b",
+		AccessToken: "temp",
 	}
-
-	wrapped, err := dhs.Wrap("lq.CustomizedContestManagerApi.oauth2LoginContestManager", login)
+	_, err = client.Oauth2LoginContestManager(login)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
-
-	go m.Connect(url)
-	_ = m.Send(wrapped)
 
 	time.Sleep(6 * time.Second)
 
-	m.Close()
+	client.Close(nil)
 
-	err = m.ExitValue()
-
+	log.Println("CLOSING")
+	err = client.ExitValue()
 	if err != nil {
 		log.Println("error: ", err)
 	}

@@ -2,7 +2,13 @@
 
 package dhs
 
-import "google.golang.org/protobuf/proto"
+import (
+	"errors"
+
+	"google.golang.org/protobuf/proto"
+
+	"majsoulgo"
+)
 
 func (client *ContestManagerClient) LoginContestManager(pbReq *ReqContestManageLogin) (*ResContestManageLogin, error) {
 	res, err := client.Call(pbReq)
@@ -39,6 +45,13 @@ func (client *ContestManagerClient) Oauth2LoginContestManager(pbReq *ReqContestM
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
