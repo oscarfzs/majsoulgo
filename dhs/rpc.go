@@ -2,13 +2,10 @@
 
 package dhs
 
-import (
-	"errors"
+import "google.golang.org/protobuf/proto"
+import "errors"
+import "majsoulgo"
 
-	"google.golang.org/protobuf/proto"
-
-	"majsoulgo"
-)
 
 func (client *ContestManagerClient) LoginContestManager(pbReq *ReqContestManageLogin) (*ResContestManageLogin, error) {
 	res, err := client.Call(pbReq)
@@ -19,6 +16,13 @@ func (client *ContestManagerClient) LoginContestManager(pbReq *ReqContestManageL
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -33,6 +37,13 @@ func (client *ContestManagerClient) Oauth2AuthContestManager(pbReq *ReqContestMa
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -41,7 +52,7 @@ func (client *ContestManagerClient) Oauth2LoginContestManager(pbReq *ReqContestM
 	if err != nil {
 		return nil, err
 	}
-	resMsg := new(ResContestManageOauth2Login)
+	resMsg := &ResContestManageOauth2Login{}
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
@@ -66,6 +77,13 @@ func (client *ContestManagerClient) LogoutContestManager(pbReq *ReqCommon) (*Res
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -78,6 +96,13 @@ func (client *ContestManagerClient) FetchRelatedContestList(pbReq *ReqCommon) (*
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -92,6 +117,13 @@ func (client *ContestManagerClient) CreateContest(pbReq *ReqCreateCustomizedCont
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -104,6 +136,13 @@ func (client *ContestManagerClient) DeleteContest(pbReq *ReqDeleteCustomizedCont
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -118,6 +157,13 @@ func (client *ContestManagerClient) ProlongContest(pbReq *ReqProlongContest) (*R
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -130,6 +176,13 @@ func (client *ContestManagerClient) ManageContest(pbReq *ReqManageContest) (*Res
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -144,6 +197,13 @@ func (client *ContestManagerClient) ExitManageContest(pbReq *ReqCommon) (*ResCom
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -156,6 +216,13 @@ func (client *ContestManagerClient) FetchContestGameRule(pbReq *ReqCommon) (*Res
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -170,6 +237,13 @@ func (client *ContestManagerClient) UpdateContestGameRule(pbReq *ReqUpdateContes
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -182,6 +256,13 @@ func (client *ContestManagerClient) SearchAccountByNickname(pbReq *ReqSearchAcco
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -196,6 +277,13 @@ func (client *ContestManagerClient) SearchAccountByEid(pbReq *ReqSearchAccountBy
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -208,6 +296,13 @@ func (client *ContestManagerClient) FetchContestPlayer(pbReq *ReqCommon) (*ResFe
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -222,6 +317,13 @@ func (client *ContestManagerClient) UpdateContestPlayer(pbReq *ReqUpdateCustomiz
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -234,6 +336,13 @@ func (client *ContestManagerClient) StartManageGame(pbReq *ReqCommon) (*ResStart
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -248,6 +357,13 @@ func (client *ContestManagerClient) StopManageGame(pbReq *ReqCommon) (*ResCommon
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -260,6 +376,13 @@ func (client *ContestManagerClient) LockGamePlayer(pbReq *ReqLockGamePlayer) (*R
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -274,6 +397,13 @@ func (client *ContestManagerClient) UnlockGamePlayer(pbReq *ReqUnlockGamePlayer)
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -286,6 +416,13 @@ func (client *ContestManagerClient) CreateContestGame(pbReq *ReqCreateContestGam
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -300,6 +437,13 @@ func (client *ContestManagerClient) FetchContestGameRecords(pbReq *ReqFetchCusto
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -312,6 +456,13 @@ func (client *ContestManagerClient) RemoveContestGameRecord(pbReq *ReqRemoveCont
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -326,6 +477,13 @@ func (client *ContestManagerClient) FetchContestNotice(pbReq *ReqFetchContestNot
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -338,6 +496,13 @@ func (client *ContestManagerClient) UpdateContestNotice(pbReq *ReqUpdateCustomiz
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -352,6 +517,13 @@ func (client *ContestManagerClient) FetchContestManager(pbReq *ReqCommon) (*ResF
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -364,6 +536,13 @@ func (client *ContestManagerClient) UpdateContestManager(pbReq *ReqUpdateCustomi
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -378,6 +557,13 @@ func (client *ContestManagerClient) FetchChatSetting(pbReq *ReqCommon) (*ResCust
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -390,6 +576,13 @@ func (client *ContestManagerClient) UpdateChatSetting(pbReq *ReqUpdateCustomized
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -404,6 +597,13 @@ func (client *ContestManagerClient) UpdateGameTag(pbReq *ReqUpdateGameTag) (*Res
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -416,6 +616,13 @@ func (client *ContestManagerClient) TerminateGame(pbReq *ReqTerminateContestGame
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }
@@ -430,6 +637,13 @@ func (client *ContestManagerClient) PauseGame(pbReq *ReqPauseContestGame) (*ResC
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -443,6 +657,13 @@ func (client *ContestManagerClient) ResumeGame(pbReq *ReqResumeContestGame) (*Re
 	if err != nil {
 		return nil, err
 	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
+	}
 	return resMsg, nil
 }
 
@@ -455,6 +676,13 @@ func (client *ContestManagerClient) FetchCurrentRankList(pbReq *ReqCommon) (*Res
 	err = proto.Unmarshal(res, resMsg)
 	if err != nil {
 		return nil, err
+	}
+	if resMsg.Error != nil {
+		err, ok := majsoulgo.ERROR_STRINGS[int(resMsg.Error.Code)]
+		if !ok {
+			return resMsg, errors.New("majsoulerror: " + "UNKNOWN ERROR")
+		}
+		return resMsg, errors.New("majsoulerror: " + err)
 	}
 	return resMsg, nil
 }

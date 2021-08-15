@@ -155,10 +155,8 @@ func (m *MajsoulChannel) Close(err error) {
 	}
 }
 
-func (m *MajsoulChannel) IsClosed() bool {
-	//A channel with length 1 indicates a stored error and therefore
-	//that the channel was closed
-	return len(m.stop) == 1
+func (m *MajsoulChannel) IsOpen() bool {
+	return m.open
 }
 
 /*
