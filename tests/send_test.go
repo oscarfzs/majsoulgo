@@ -6,9 +6,39 @@ import (
 	"majsoulgo/dhs"
 	"testing"
 	"time"
-
-	"google.golang.org/protobuf/proto"
 )
+
+func TestCallRpc(t *testing.T) {
+	client := dhs.NewContestManagerClient()
+	url, err := majsoulgo.GetContestManagementServerUrl()
+	if err != nil {
+		log.Printf("unable to find server")
+		return
+	}
+
+	go client.Connect(url)
+
+	login := &dhs.ReqContestManageOauth2Login{
+		Type:        10,
+		AccessToken: "temp",
+	}
+	res, err := client.Oauth2LoginContestManager(login)
+	if err != nil {
+		t.Error(err)
+	}
+
+	log.Println(res)
+
+	time.Sleep(6 * time.Second)
+
+	client.Close()
+
+	err = client.ExitValue()
+
+	if err != nil {
+		log.Println("error: ", err)
+	}
+}
 
 func TestSendMessage(t *testing.T) {
 	m := majsoulgo.NewMajsoulChannel()
@@ -20,20 +50,16 @@ func TestSendMessage(t *testing.T) {
 
 	login := &dhs.ReqContestManageOauth2Login{
 		Type:        10,
-		AccessToken: "something something something",
+		AccessToken: "213474b4-d17f-4cb6-9552-aaca726fda2b",
 	}
 
-	out, _ := proto.Marshal(login)
-
-	wrapped := &dhs.Wrapper{
-		Name: ".lq.CustomizedContestManagerApi.oauth2LoginContestManager",
-		Data: out,
+	wrapped, err := dhs.Wrap("lq.CustomizedContestManagerApi.oauth2LoginContestManager", login)
+	if err != nil {
+		log.Fatalln(err)
 	}
-
-	out, _ = proto.Marshal(wrapped)
 
 	go m.Connect(url)
-	m.Send(out)
+	_ = m.Send(wrapped)
 
 	time.Sleep(6 * time.Second)
 

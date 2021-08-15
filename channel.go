@@ -18,34 +18,38 @@ var (
 	MSG_TYPE_REQUEST  = 2
 	MSG_TYPE_RESPONSE = 3
 
-	MAX_MSG_INDEX = 1 << 16
-
 	PING_INTERVAL    = 3 //seconds
 	TIMEOUT_INTERVAL = 2 //seconds
 
-	OUTGOING_BUFFER_LENGTH = 20
+	OUTGOING_CHANNEL_SIZE      = 20
+	NOTIFICATIONS_CHANNEL_SIZE = 100
 )
 
 type MajsoulChannel struct {
+	//Underlying websocket connection
 	Connection *websocket.Conn
 
+	//Mutex for ensuring that only one goroutine can
+	//read and increment the msgIndex field
 	mutexMsgIndex *sync.Mutex
 
 	//Requests sent to the server must be indexed. When a request is sent
-	//to the server, the second byte of the message must contain the msgIndex.
+	//to the server, the second and third byte of the message contains the message index.
 	//That way, responses received from the server can be traced back to the
 	//request that initiated the response.
-	msgIndex  int16
-	responses map[int16](chan []byte)
+	msgIndex      uint16
+	requests      map[uint16](chan []byte)
+	responses     map[uint16](chan []byte)
+	notifications chan []byte
 
-	timeLastPingSent     time.Time
-	timeLastPongReceived time.Time
-
-	//Buffered channel for outgoing messages
+	//Buffered channel for outgoing requests
 	outgoing chan struct {
 		MsgType int
 		Msg     []byte
 	}
+
+	timeLastPingSent     time.Time
+	timeLastPongReceived time.Time
 
 	//`MajsoulChannel.stop` is a buffered channel of capacity 1 and does two tasks
 	//First, it acts as a signaler to any goroutines that the channel
@@ -57,16 +61,18 @@ type MajsoulChannel struct {
 	stop chan error
 }
 
+//Function for creating a new MajsoulChannel. Handles all field initalizations.
 func NewMajsoulChannel() *MajsoulChannel {
 	m := new(MajsoulChannel)
 
 	m.mutexMsgIndex = new(sync.Mutex)
-	m.responses = make(map[int16](chan []byte))
+	m.responses = make(map[uint16](chan []byte))
+	m.notifications = make(chan []byte, NOTIFICATIONS_CHANNEL_SIZE)
 
 	m.outgoing = make(chan struct {
 		MsgType int
 		Msg     []byte
-	}, OUTGOING_BUFFER_LENGTH)
+	}, OUTGOING_CHANNEL_SIZE)
 
 	m.stop = make(chan error, 1)
 	return m
@@ -75,10 +81,6 @@ func NewMajsoulChannel() *MajsoulChannel {
 /*
 Connects to the server specified by the url string. The url string of a
 MahjongSoul server can be obtained by using the functions defined in majsoul.go
-
-Once connected, one goroutine will be spawned that listens for incoming messages
-and one will be spawned that routinely sends ping messages in order to maintain the
-connection.
 
 After successfully connecting, the channel can be closed by calling MajsoulChannel.Close()
 */
@@ -101,8 +103,8 @@ func (m *MajsoulChannel) Connect(url string) {
 	signal.Notify(interrupt, os.Interrupt)
 
 	go m.recvMsg()
-	go m.keepAlive()
 	go m.sendMsg()
+	go m.sustain()
 
 	for {
 		select {
@@ -116,19 +118,20 @@ func (m *MajsoulChannel) Connect(url string) {
 	}
 }
 
-func (m *MajsoulChannel) Send(msg []byte) {
+//Processes and pushes a message to the outgoing channel for sendMsg() to handle
+func (m *MajsoulChannel) Send(msg []byte) []byte {
 	m.mutexMsgIndex.Lock()
 	index := m.msgIndex
-	m.msgIndex = int16(MAX_MSG_INDEX) % (index + 1)
+	m.msgIndex += 1
 	m.mutexMsgIndex.Unlock()
 
-	m.responses[index] = make(chan []byte)
+	m.responses[index] = make(chan []byte, 1)
 
 	h1 := make([]byte, 1)
 	h2 := make([]byte, 2)
 
 	h1[0] = byte(MSG_TYPE_REQUEST)
-	binary.LittleEndian.PutUint16(h2, uint16(index))
+	binary.LittleEndian.PutUint16(h2, index)
 
 	var msgBuffer bytes.Buffer
 	msgBuffer.Write(h1)
@@ -139,6 +142,9 @@ func (m *MajsoulChannel) Send(msg []byte) {
 		MsgType int
 		Msg     []byte
 	}{websocket.BinaryMessage, msgBuffer.Bytes()}
+
+	res := <-m.responses[index]
+	return res
 }
 
 /*
@@ -175,7 +181,7 @@ A timeout is implemented such that if the corresponding pong message is
 not received within TIMEOUT_INTERVAL seconds, then the MajsoulChannel is automatically
 closed.
 */
-func (m *MajsoulChannel) keepAlive() {
+func (m *MajsoulChannel) sustain() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
@@ -206,6 +212,9 @@ func (m *MajsoulChannel) keepAlive() {
 	}
 }
 
+//Looping goroutine that reads outgoing messages from the outgoing channel
+//and sends them through the websocket connection. Only this function may call
+//the ReadMessage() function of the websocket connection.
 func (m *MajsoulChannel) sendMsg() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
@@ -239,6 +248,8 @@ func (m *MajsoulChannel) sendMsg() {
 	}
 }
 
+//Looping goroutine that reads incoming messages from the websocket connection.
+//Only this function may call the WriteMessage() function of the websocket connection.
 func (m *MajsoulChannel) recvMsg() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
@@ -258,8 +269,42 @@ func (m *MajsoulChannel) recvMsg() {
 				return
 			}
 
-			log.Println("Received message: ", msg)
+			m.processMsg(msg)
 		}
+	}
+}
+
+//Processes incoming messages to see if they are responses or notifications.
+//Pushes the message to the corresponding channel (responses or notifications).
+func (m *MajsoulChannel) processMsg(msg []byte) {
+	reqType := int(msg[0])
+
+	switch reqType {
+	case MSG_TYPE_RESPONSE:
+		var index uint16
+		buf := bytes.NewReader(msg[1:3])
+		err := binary.Read(buf, binary.LittleEndian, &index)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
+		_, ok := m.responses[index]
+		if !ok {
+			log.Println(errors.New("response received with unexpected request index"))
+			return
+		}
+
+		log.Println("Response received: ", msg)
+		m.responses[index] <- msg[3:]
+	case MSG_TYPE_NOTIFY:
+		log.Println("Notification received: ", msg)
+		if len(m.notifications) == cap(m.notifications) {
+			<-m.notifications
+		}
+		m.notifications <- msg[1:]
+	default:
+		log.Println("Unknown message type received")
 	}
 }
 
