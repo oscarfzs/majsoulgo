@@ -1,4 +1,4 @@
-package majsoulgo
+package mjs
 
 import (
 	"encoding/json"

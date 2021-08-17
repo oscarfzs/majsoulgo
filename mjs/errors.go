@@ -1,4 +1,4 @@
-package majsoulgo
+package mjs
 
 const (
 	ERR_UNKNOWN                     = 1

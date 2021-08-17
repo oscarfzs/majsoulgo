@@ -2,15 +2,14 @@ package majsoultest
 
 import (
 	"log"
-	"majsoulgo"
 	"majsoulgo/dhs"
+	"majsoulgo/mjs"
 	"testing"
-	"time"
 )
 
 func TestCallRpc(t *testing.T) {
 	client := dhs.NewContestManagerClient()
-	url, err := majsoulgo.GetContestManagementServerUrl()
+	url, err := mjs.GetContestManagementServerUrl()
 	if err != nil {
 		log.Printf("unable to find server")
 		return
@@ -20,7 +19,7 @@ func TestCallRpc(t *testing.T) {
 
 	login := &dhs.ReqContestManageOauth2Login{
 		Type:        10,
-		AccessToken: "temp",
+		AccessToken: "foo",
 	}
 	res, err := client.Oauth2LoginContestManager(login)
 	if err != nil {
@@ -29,8 +28,6 @@ func TestCallRpc(t *testing.T) {
 	}
 
 	log.Println(res)
-
-	time.Sleep(6 * time.Second)
 
 	client.Close(nil)
 

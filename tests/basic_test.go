@@ -1,12 +1,12 @@
 package majsoultest
 
 import (
-	"majsoulgo"
+	"majsoulgo/mjs"
 	"testing"
 )
 
 func TestGetVersion(t *testing.T) {
-	v, err := majsoulgo.GetMajsoulVersion()
+	v, err := mjs.GetMajsoulVersion()
 
 	if err != nil {
 		t.Errorf(err.Error())
@@ -16,7 +16,7 @@ func TestGetVersion(t *testing.T) {
 }
 
 func TestGetGameServerUrl(t *testing.T) {
-	s, err := majsoulgo.GetGameServerUrl()
+	s, err := mjs.GetGameServerUrl()
 
 	if err != nil {
 		t.Errorf(err.Error())
@@ -26,7 +26,7 @@ func TestGetGameServerUrl(t *testing.T) {
 }
 
 func TestGetContestManagementServerUrl(t *testing.T) {
-	s, err := majsoulgo.GetContestManagementServerUrl()
+	s, err := mjs.GetContestManagementServerUrl()
 
 	if err != nil {
 		t.Errorf(err.Error())

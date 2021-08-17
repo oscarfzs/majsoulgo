@@ -1,35 +1,74 @@
 package dhs
 
 import (
-	"majsoulgo"
+	"fmt"
+	"majsoulgo/mjs"
+	"majsoulgo/mjsproto"
 
 	"google.golang.org/protobuf/proto"
 )
 
-type ContestManagerClient struct{ majsoulgo.MajsoulChannel }
+type ContestManagerClient struct{ mjs.MajsoulChannel }
 
 func NewContestManagerClient() *ContestManagerClient {
 	c := new(ContestManagerClient)
-	c.MajsoulChannel = *majsoulgo.NewMajsoulChannel()
+	c.MajsoulChannel = *mjs.NewMajsoulChannel()
 	return c
 }
 
-func (client *ContestManagerClient) Call(pbReq proto.Message) ([]byte, error) {
-	name, err := GetMethodFullName(pbReq)
+func (client *ContestManagerClient) CallMethod(methodFullName string, pbReq proto.Message) (proto.Message, error) {
+	msg, err := proto.Marshal(pbReq)
 	if err != nil {
 		return nil, err
 	}
 
-	wrapped, err := Wrap(name, pbReq)
+	wrapped, err := Wrap(methodFullName, msg)
 	if err != nil {
 		return nil, err
 	}
+
 	res := client.Send(wrapped)
 
-	unwrapped, err := Unwrap(res)
+	_, data, err := Unwrap(res)
 	if err != nil {
 		return nil, err
 	}
 
-	return unwrapped, nil
+	outputName, err := mjsproto.FindMethodOutputName(File_proto_dhs_dhs_proto, methodFullName)
+	if err != nil {
+		return nil, err
+	}
+
+	resMsg := NewMessageByName[outputName]()
+
+	err = proto.Unmarshal(data, resMsg)
+	if err != nil {
+		return nil, err
+	}
+
+	return resMsg, nil
+}
+
+func Wrap(name string, msg []byte) ([]byte, error) {
+	wrapped := &Wrapper{
+		Name: fmt.Sprintf(".%s", name),
+		Data: msg,
+	}
+
+	out, err := proto.Marshal(wrapped)
+	if err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
+
+func Unwrap(msg []byte) (string, []byte, error) {
+	wrapped := &Wrapper{}
+	err := proto.Unmarshal(msg, wrapped)
+	if err != nil {
+		return "", nil, err
+	}
+
+	return wrapped.Name, wrapped.Data, nil
 }

@@ -2,15 +2,15 @@ package majsoultest
 
 import (
 	"log"
-	"majsoulgo"
 	"majsoulgo/dhs"
+	"majsoulgo/mjs"
 	"testing"
 	"time"
 )
 
 func TestReconnect(t *testing.T) {
 	client := dhs.NewContestManagerClient()
-	url, err := majsoulgo.GetContestManagementServerUrl()
+	url, err := mjs.GetContestManagementServerUrl()
 	if err != nil {
 		log.Printf("unable to find server")
 		return

@@ -2,14 +2,14 @@ package majsoultest
 
 import (
 	"log"
-	"majsoulgo"
 	"majsoulgo/dhs"
+	"majsoulgo/mjs"
 	"testing"
 )
 
 func TestConnect(t *testing.T) {
 	client := dhs.NewContestManagerClient()
-	url, err := majsoulgo.GetContestManagementServerUrl()
+	url, err := mjs.GetContestManagementServerUrl()
 
 	if err != nil {
 		t.Errorf(err.Error())
