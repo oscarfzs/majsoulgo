@@ -29,6 +29,9 @@ type MajsoulChannel struct {
 	//Underlying websocket connection
 	Connection *websocket.Conn
 
+	//Mutex for coarse grained locking
+	mutexAll *sync.Mutex
+
 	//Mutex for ensuring that only one goroutine can
 	//read and increment the msgIndex field
 	mutexMsgIndex *sync.Mutex
@@ -62,6 +65,7 @@ type MajsoulChannel struct {
 func NewMajsoulChannel() *MajsoulChannel {
 	m := new(MajsoulChannel)
 
+	m.mutexAll = new(sync.Mutex)
 	m.mutexMsgIndex = new(sync.Mutex)
 	m.responses = make(map[uint16](chan []byte))
 	m.notifications = make(chan []byte, NOTIFICATIONS_CHANNEL_SIZE)
@@ -137,6 +141,7 @@ func (m *MajsoulChannel) Send(msg []byte) []byte {
 
 	m.writeMsg(websocket.BinaryMessage, msgBuffer.Bytes())
 
+	//Wait for the response to come through the channel
 	res := <-m.responses[index]
 	return res
 }
@@ -147,12 +152,14 @@ into the close channel. A nil value passed into the channel indicates that the
 channel was closed by the application and not due to encountering any errors.
 */
 func (m *MajsoulChannel) Close(err error) {
+	m.mutexAll.Lock()
 	if m.open {
 		m.exitValue = err
 		m.open = false
 		close(m.stop)
 		log.Println("Majsoul channel closed.")
 	}
+	m.mutexAll.Unlock()
 }
 
 func (m *MajsoulChannel) IsOpen() bool {
@@ -163,8 +170,6 @@ func (m *MajsoulChannel) IsOpen() bool {
 ExitValue is the function for user applications to retrieve the error that
 caused the MajsoulChannel to close. A nil value means that the channel was closed
 by the user.
-
-This function should only be called
 */
 func (m *MajsoulChannel) ExitValue() error {
 	<-m.stop

@@ -44,6 +44,7 @@ func urlBody(url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
@@ -58,6 +59,7 @@ func GetMajsoulVersion() (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	var v MajsoulVersion
 	err = json.Unmarshal(result, &v)
 	if err != nil {
@@ -74,28 +76,23 @@ func GetGameServerUrl() (string, error) {
 	}
 
 	url := fmt.Sprintf(NA_CONFIG_URL, version)
-
 	b, err := urlBody(url)
-
 	if err != nil {
 		return "", err
 	}
 
 	var config MajsoulGameServerConfig
-
 	err = json.Unmarshal(b, &config)
-
 	if err != nil {
 		return "", err
 	}
 
 	url = config.IP[0].RegionUrls[0].URL + "?service=ws-gateway&protocol=ws&ssl=true"
-
 	b, err = urlBody(url)
-
 	if err != nil {
 		return "", err
 	}
+
 	var mj MajsoulServerUrls
 	err = json.Unmarshal(b, &mj)
 	if err != nil {
@@ -119,22 +116,18 @@ func GetContestManagementServerUrl() (string, error) {
 	//Use a regular expression to find the 4-digit port number within the retrieved text.
 	re := regexp.MustCompile("[0-9]{4}")
 	matches := re.FindAllString(string(result), 1)
-
 	if len(matches) == 0 {
 		return "", errors.New("no contest management servers found")
 	}
 
 	port := matches[0]
 	url := fmt.Sprintf(NA_CONTEST_MANAGEMENT_SERVER_LIST_URL, port)
-
 	b, err := urlBody(url)
-
 	if err != nil {
 		return "", err
 	}
 
 	var mj MajsoulServerUrls
-
 	err = json.Unmarshal(b, &mj)
 	if err != nil {
 		return "", err
