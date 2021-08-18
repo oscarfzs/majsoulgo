@@ -1,5 +1,13 @@
 package mjs
 
+func ErrorMessageByCode(code int) string {
+	err, ok := ERROR_STRINGS[code]
+	if !ok {
+		return ""
+	}
+	return err
+}
+
 const (
 	ERR_UNKNOWN                     = 1
 	ERR_SYSTEM_ERROR                = 2

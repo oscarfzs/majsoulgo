@@ -18,8 +18,8 @@ var (
 	MSG_TYPE_REQUEST  = 2
 	MSG_TYPE_RESPONSE = 3
 
-	PING_INTERVAL    = 3 //seconds
-	TIMEOUT_INTERVAL = 2 //seconds
+	PING_INTERVAL    = 5 //seconds
+	TIMEOUT_INTERVAL = 3 //seconds
 
 	OUTGOING_CHANNEL_SIZE      = 20
 	NOTIFICATIONS_CHANNEL_SIZE = 100
@@ -40,10 +40,12 @@ type MajsoulChannel struct {
 	//to the server, the second and third byte of the message contains the message index.
 	//That way, responses received from the server can be traced back to the
 	//request that initiated the response.
-	msgIndex      uint16
-	requests      map[uint16](chan []byte)
-	responses     map[uint16](chan []byte)
-	notifications chan []byte
+	msgIndex  uint16
+	responses map[uint16](chan []byte)
+
+	notifications        chan []byte
+	notificationHandler  func(msg []byte)
+	previousNotification []byte
 
 	//Buffered channel for outgoing requests
 	outgoing chan struct {
@@ -58,7 +60,7 @@ type MajsoulChannel struct {
 	stop chan struct{}
 
 	exitValue error
-	open      bool
+	isopen    bool
 }
 
 //Function for creating a new MajsoulChannel. Handles all field initalizations.
@@ -67,6 +69,7 @@ func NewMajsoulChannel() *MajsoulChannel {
 
 	m.mutexAll = new(sync.Mutex)
 	m.mutexMsgIndex = new(sync.Mutex)
+
 	m.responses = make(map[uint16](chan []byte))
 	m.notifications = make(chan []byte, NOTIFICATIONS_CHANNEL_SIZE)
 
@@ -86,6 +89,8 @@ MahjongSoul server can be obtained by using the functions defined in majsoul.go
 After successfully connecting, the channel can be closed by calling MajsoulChannel.Close()
 */
 func (m *MajsoulChannel) Connect(url string) error {
+	m.mutexAll.Lock()
+
 	var err error
 	m.Connection, _, err = websocket.DefaultDialer.Dial(url, nil)
 
@@ -95,9 +100,7 @@ func (m *MajsoulChannel) Connect(url string) error {
 
 	defer m.Connection.Close()
 
-	log.Println("Successfully connected to", url)
-
-	m.open = true
+	m.isopen = true
 	m.stop = make(chan struct{}, 1)
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
@@ -108,6 +111,10 @@ func (m *MajsoulChannel) Connect(url string) error {
 	go m.sendMsg(m.stop)
 	go m.sustain(m.stop)
 
+	log.Println("Successfully connected to", url)
+
+	m.mutexAll.Unlock()
+
 	for {
 		select {
 		case <-interrupt:
@@ -115,6 +122,10 @@ func (m *MajsoulChannel) Connect(url string) error {
 			return m.ExitValue()
 		case <-m.stop:
 			return m.ExitValue()
+		case msg := <-m.notifications:
+			if m.notificationHandler != nil {
+				go m.notificationHandler(msg)
+			}
 		}
 	}
 }
@@ -146,6 +157,11 @@ func (m *MajsoulChannel) Send(msg []byte) []byte {
 	return res
 }
 
+func (m *MajsoulChannel) SetNotificationHandler(h func(msg []byte)) {
+	log.Println("Setting notification handler")
+	m.notificationHandler = h
+}
+
 /*
 Closes the channel. The way channels are closed is by passing an error
 into the close channel. A nil value passed into the channel indicates that the
@@ -153,9 +169,9 @@ channel was closed by the application and not due to encountering any errors.
 */
 func (m *MajsoulChannel) Close(err error) {
 	m.mutexAll.Lock()
-	if m.open {
+	if m.isopen {
 		m.exitValue = err
-		m.open = false
+		m.isopen = false
 		close(m.stop)
 		log.Println("Majsoul channel closed.")
 	}
@@ -163,7 +179,7 @@ func (m *MajsoulChannel) Close(err error) {
 }
 
 func (m *MajsoulChannel) IsOpen() bool {
-	return m.open
+	return m.isopen
 }
 
 /*
@@ -262,13 +278,14 @@ func (m *MajsoulChannel) recvMsg(stop chan struct{}) {
 		case <-stop:
 			return
 		default:
-			_, msg, err := m.Connection.ReadMessage()
+			msgType, msg, err := m.Connection.ReadMessage()
 			if err != nil {
 				m.Close(err)
 				return
 			}
-
-			m.processMsg(msg)
+			if msgType == websocket.BinaryMessage {
+				m.processMsg(msg)
+			}
 		}
 	}
 }
@@ -297,7 +314,13 @@ func (m *MajsoulChannel) processMsg(msg []byte) {
 		log.Println("Response received: ", msg)
 		m.responses[index] <- msg[3:]
 	case MSG_TYPE_NOTIFY:
+		if bytes.Equal(msg, m.previousNotification) {
+			return
+		}
+		m.previousNotification = msg
+
 		log.Println("Notification received: ", msg)
+
 		if len(m.notifications) == cap(m.notifications) {
 			<-m.notifications
 		}

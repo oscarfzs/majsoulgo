@@ -1,4 +1,4 @@
-package dhs
+package lq
 
 import (
 	"fmt"
@@ -14,21 +14,21 @@ var (
 	NOTIFICATION_HANDLER_CAPACITY = 10
 )
 
-type ContestManagerClient struct {
+type MajsoulGameClient struct {
 	mjs.MajsoulChannel
 
 	notificationHandlers map[string][]func(pbMsg proto.Message)
 }
 
-func NewContestManagerClient() *ContestManagerClient {
-	client := new(ContestManagerClient)
+func NewMajsoulGameClient() *MajsoulGameClient {
+	client := new(MajsoulGameClient)
 	client.MajsoulChannel = *mjs.NewMajsoulChannel()
 	client.notificationHandlers = make(map[string][]func(pbMsg proto.Message))
 	client.SetNotificationHandler(client.processNotification)
 	return client
 }
 
-func (client *ContestManagerClient) CallMethod(methodFullName string, pbReq proto.Message) (proto.Message, error) {
+func (client *MajsoulGameClient) CallMethod(methodFullName string, pbReq proto.Message) (proto.Message, error) {
 	msg, err := proto.Marshal(pbReq)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (client *ContestManagerClient) CallMethod(methodFullName string, pbReq prot
 		return nil, err
 	}
 
-	outputName, err := mjsproto.FindMethodOutputName(File_dhs_proto, methodFullName)
+	outputName, err := mjsproto.FindMethodOutputName(File_liqi_proto, methodFullName)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +61,7 @@ func (client *ContestManagerClient) CallMethod(methodFullName string, pbReq prot
 	return resMsg, nil
 }
 
-func (client *ContestManagerClient) AddNotificationHandler(pbMsg proto.Message, h func(pbMsg proto.Message)) {
+func (client *MajsoulGameClient) AddNotificationHandler(pbMsg proto.Message, h func(pbMsg proto.Message)) {
 	name := string(pbMsg.ProtoReflect().Descriptor().Name())
 	handlers, ok := client.notificationHandlers[name]
 	if !ok {
@@ -70,7 +70,7 @@ func (client *ContestManagerClient) AddNotificationHandler(pbMsg proto.Message, 
 	client.notificationHandlers[name] = append(handlers, h)
 }
 
-func (client *ContestManagerClient) processNotification(msg []byte) {
+func (client *MajsoulGameClient) processNotification(msg []byte) {
 	name, data, err := unwrap(msg)
 	if err != nil {
 		log.Println(err)
