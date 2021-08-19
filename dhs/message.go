@@ -15,9 +15,6 @@ var NewMessageByName = map[string]func() proto.Message{
 	"ResContestManageOauth2Auth":              newResContestManageOauth2Auth,
 	"ReqContestManageOauth2Login":             newReqContestManageOauth2Login,
 	"ResContestManageOauth2Login":             newResContestManageOauth2Login,
-	"ContestDetailRule":                       newContestDetailRule,
-	"ContestDetailRuleV2":                     newContestDetailRuleV2,
-	"GameRuleSetting":                         newGameRuleSetting,
 	"ResFetchRelatedContestList":              newResFetchRelatedContestList,
 	"ReqCreateCustomizedContest":              newReqCreateCustomizedContest,
 	"ResCreateCustomizedContest":              newResCreateCustomizedContest,
@@ -56,6 +53,12 @@ var NewMessageByName = map[string]func() proto.Message{
 	"ReqPauseContestGame":                     newReqPauseContestGame,
 	"ReqResumeContestGame":                    newReqResumeContestGame,
 	"ResFetchCurrentRankList":                 newResFetchCurrentRankList,
+	"ResFetchContestLastModify":               newResFetchContestLastModify,
+	"ResFetchContestObserver":                 newResFetchContestObserver,
+	"ReqAddContestObserver":                   newReqAddContestObserver,
+	"ResAddContestObserver":                   newResAddContestObserver,
+	"ReqRemoveContestObserver":                newReqRemoveContestObserver,
+	"ResFetchContestChatHistory":              newResFetchContestChatHistory,
 	"NotifyContestMatchingPlayer":             newNotifyContestMatchingPlayer,
 	"NotifyContestMatchingPlayerLock":         newNotifyContestMatchingPlayerLock,
 	"NotifyContestGameStart":                  newNotifyContestGameStart,
@@ -81,6 +84,7 @@ var NewMessageByName = map[string]func() proto.Message{
 	"AccountCacheView":                        newAccountCacheView,
 	"PlayerBaseView":                          newPlayerBaseView,
 	"PlayerGameView":                          newPlayerGameView,
+	"GameSetting":                             newGameSetting,
 	"GameMode":                                newGameMode,
 	"GameTestingEnvironmentSet":               newGameTestingEnvironmentSet,
 	"GameDetailRule":                          newGameDetailRule,
@@ -106,6 +110,7 @@ var NewMessageByName = map[string]func() proto.Message{
 	"AccountDetailStatisticV2":                newAccountDetailStatisticV2,
 	"AccountShiLian":                          newAccountShiLian,
 	"ClientDeviceInfo":                        newClientDeviceInfo,
+	"ClientVersionInfo":                       newClientVersionInfo,
 	"Announcement":                            newAnnouncement,
 	"TaskProgress":                            newTaskProgress,
 	"GameConfig":                              newGameConfig,
@@ -130,6 +135,7 @@ var NewMessageByName = map[string]func() proto.Message{
 	"ShopInfo":                                newShopInfo,
 	"ChangeNicknameRecord":                    newChangeNicknameRecord,
 	"ServerSettings":                          newServerSettings,
+	"PaymentSettingV2":                        newPaymentSettingV2,
 	"PaymentSetting":                          newPaymentSetting,
 	"AccountSetting":                          newAccountSetting,
 	"ChestData":                               newChestData,
@@ -153,6 +159,57 @@ var NewMessageByName = map[string]func() proto.Message{
 	"GameRoundSnapshot":                       newGameRoundSnapshot,
 	"GameFinalSnapshot":                       newGameFinalSnapshot,
 	"RecordCollectedData":                     newRecordCollectedData,
+	"ContestDetailRule":                       newContestDetailRule,
+	"ContestDetailRuleV2":                     newContestDetailRuleV2,
+	"GameRuleSetting":                         newGameRuleSetting,
+	"RecordTingPaiInfo":                       newRecordTingPaiInfo,
+	"RecordNoTilePlayerInfo":                  newRecordNoTilePlayerInfo,
+	"RecordHuleInfo":                          newRecordHuleInfo,
+	"RecordHulesInfo":                         newRecordHulesInfo,
+	"RecordLiujuInfo":                         newRecordLiujuInfo,
+	"RecordNoTileInfo":                        newRecordNoTileInfo,
+	"RecordLiqiInfo":                          newRecordLiqiInfo,
+	"RecordGangInfo":                          newRecordGangInfo,
+	"RecordBaBeiInfo":                         newRecordBaBeiInfo,
+	"RecordPeiPaiInfo":                        newRecordPeiPaiInfo,
+	"RecordRoundInfo":                         newRecordRoundInfo,
+	"RecordAnalysisedData":                    newRecordAnalysisedData,
+	"NotifyRoomGameStart":                     newNotifyRoomGameStart,
+	"NotifyMatchGameStart":                    newNotifyMatchGameStart,
+	"NotifyRoomPlayerReady":                   newNotifyRoomPlayerReady,
+	"NotifyRoomPlayerDressing":                newNotifyRoomPlayerDressing,
+	"NotifyRoomPlayerUpdate":                  newNotifyRoomPlayerUpdate,
+	"NotifyRoomKickOut":                       newNotifyRoomKickOut,
+	"NotifyMatchTimeout":                      newNotifyMatchTimeout,
+	"NotifyFriendStateChange":                 newNotifyFriendStateChange,
+	"NotifyFriendViewChange":                  newNotifyFriendViewChange,
+	"NotifyFriendChange":                      newNotifyFriendChange,
+	"NotifyNewFriendApply":                    newNotifyNewFriendApply,
+	"NotifyClientMessage":                     newNotifyClientMessage,
+	"NotifyAccountUpdate":                     newNotifyAccountUpdate,
+	"NotifyAnotherLogin":                      newNotifyAnotherLogin,
+	"NotifyAccountLogout":                     newNotifyAccountLogout,
+	"NotifyAnnouncementUpdate":                newNotifyAnnouncementUpdate,
+	"NotifyNewMail":                           newNotifyNewMail,
+	"NotifyDeleteMail":                        newNotifyDeleteMail,
+	"NotifyReviveCoinUpdate":                  newNotifyReviveCoinUpdate,
+	"NotifyDailyTaskUpdate":                   newNotifyDailyTaskUpdate,
+	"NotifyActivityTaskUpdate":                newNotifyActivityTaskUpdate,
+	"NotifyActivityPeriodTaskUpdate":          newNotifyActivityPeriodTaskUpdate,
+	"NotifyAccountRandomTaskUpdate":           newNotifyAccountRandomTaskUpdate,
+	"NotifyAccountChallengeTaskUpdate":        newNotifyAccountChallengeTaskUpdate,
+	"NotifyNewComment":                        newNotifyNewComment,
+	"NotifyRollingNotice":                     newNotifyRollingNotice,
+	"NotifyGiftSendRefresh":                   newNotifyGiftSendRefresh,
+	"NotifyShopUpdate":                        newNotifyShopUpdate,
+	"NotifyVipLevelChange":                    newNotifyVipLevelChange,
+	"NotifyServerSetting":                     newNotifyServerSetting,
+	"NotifyPayResult":                         newNotifyPayResult,
+	"NotifyCustomContestAccountMsg":           newNotifyCustomContestAccountMsg,
+	"NotifyCustomContestSystemMsg":            newNotifyCustomContestSystemMsg,
+	"NotifyCustomContestState":                newNotifyCustomContestState,
+	"NotifyActivityChange":                    newNotifyActivityChange,
+	"NotifyAFKResult":                         newNotifyAFKResult,
 }
 
 func newCustomizedContest() proto.Message {
@@ -193,18 +250,6 @@ func newReqContestManageOauth2Login() proto.Message {
 
 func newResContestManageOauth2Login() proto.Message {
 	return &ResContestManageOauth2Login{}
-}
-
-func newContestDetailRule() proto.Message {
-	return &ContestDetailRule{}
-}
-
-func newContestDetailRuleV2() proto.Message {
-	return &ContestDetailRuleV2{}
-}
-
-func newGameRuleSetting() proto.Message {
-	return &GameRuleSetting{}
 }
 
 func newResFetchRelatedContestList() proto.Message {
@@ -359,6 +404,30 @@ func newResFetchCurrentRankList() proto.Message {
 	return &ResFetchCurrentRankList{}
 }
 
+func newResFetchContestLastModify() proto.Message {
+	return &ResFetchContestLastModify{}
+}
+
+func newResFetchContestObserver() proto.Message {
+	return &ResFetchContestObserver{}
+}
+
+func newReqAddContestObserver() proto.Message {
+	return &ReqAddContestObserver{}
+}
+
+func newResAddContestObserver() proto.Message {
+	return &ResAddContestObserver{}
+}
+
+func newReqRemoveContestObserver() proto.Message {
+	return &ReqRemoveContestObserver{}
+}
+
+func newResFetchContestChatHistory() proto.Message {
+	return &ResFetchContestChatHistory{}
+}
+
 func newNotifyContestMatchingPlayer() proto.Message {
 	return &NotifyContestMatchingPlayer{}
 }
@@ -457,6 +526,10 @@ func newPlayerBaseView() proto.Message {
 
 func newPlayerGameView() proto.Message {
 	return &PlayerGameView{}
+}
+
+func newGameSetting() proto.Message {
+	return &GameSetting{}
 }
 
 func newGameMode() proto.Message {
@@ -559,6 +632,10 @@ func newClientDeviceInfo() proto.Message {
 	return &ClientDeviceInfo{}
 }
 
+func newClientVersionInfo() proto.Message {
+	return &ClientVersionInfo{}
+}
+
 func newAnnouncement() proto.Message {
 	return &Announcement{}
 }
@@ -655,6 +732,10 @@ func newServerSettings() proto.Message {
 	return &ServerSettings{}
 }
 
+func newPaymentSettingV2() proto.Message {
+	return &PaymentSettingV2{}
+}
+
 func newPaymentSetting() proto.Message {
 	return &PaymentSetting{}
 }
@@ -745,4 +826,208 @@ func newGameFinalSnapshot() proto.Message {
 
 func newRecordCollectedData() proto.Message {
 	return &RecordCollectedData{}
+}
+
+func newContestDetailRule() proto.Message {
+	return &ContestDetailRule{}
+}
+
+func newContestDetailRuleV2() proto.Message {
+	return &ContestDetailRuleV2{}
+}
+
+func newGameRuleSetting() proto.Message {
+	return &GameRuleSetting{}
+}
+
+func newRecordTingPaiInfo() proto.Message {
+	return &RecordTingPaiInfo{}
+}
+
+func newRecordNoTilePlayerInfo() proto.Message {
+	return &RecordNoTilePlayerInfo{}
+}
+
+func newRecordHuleInfo() proto.Message {
+	return &RecordHuleInfo{}
+}
+
+func newRecordHulesInfo() proto.Message {
+	return &RecordHulesInfo{}
+}
+
+func newRecordLiujuInfo() proto.Message {
+	return &RecordLiujuInfo{}
+}
+
+func newRecordNoTileInfo() proto.Message {
+	return &RecordNoTileInfo{}
+}
+
+func newRecordLiqiInfo() proto.Message {
+	return &RecordLiqiInfo{}
+}
+
+func newRecordGangInfo() proto.Message {
+	return &RecordGangInfo{}
+}
+
+func newRecordBaBeiInfo() proto.Message {
+	return &RecordBaBeiInfo{}
+}
+
+func newRecordPeiPaiInfo() proto.Message {
+	return &RecordPeiPaiInfo{}
+}
+
+func newRecordRoundInfo() proto.Message {
+	return &RecordRoundInfo{}
+}
+
+func newRecordAnalysisedData() proto.Message {
+	return &RecordAnalysisedData{}
+}
+
+func newNotifyRoomGameStart() proto.Message {
+	return &NotifyRoomGameStart{}
+}
+
+func newNotifyMatchGameStart() proto.Message {
+	return &NotifyMatchGameStart{}
+}
+
+func newNotifyRoomPlayerReady() proto.Message {
+	return &NotifyRoomPlayerReady{}
+}
+
+func newNotifyRoomPlayerDressing() proto.Message {
+	return &NotifyRoomPlayerDressing{}
+}
+
+func newNotifyRoomPlayerUpdate() proto.Message {
+	return &NotifyRoomPlayerUpdate{}
+}
+
+func newNotifyRoomKickOut() proto.Message {
+	return &NotifyRoomKickOut{}
+}
+
+func newNotifyMatchTimeout() proto.Message {
+	return &NotifyMatchTimeout{}
+}
+
+func newNotifyFriendStateChange() proto.Message {
+	return &NotifyFriendStateChange{}
+}
+
+func newNotifyFriendViewChange() proto.Message {
+	return &NotifyFriendViewChange{}
+}
+
+func newNotifyFriendChange() proto.Message {
+	return &NotifyFriendChange{}
+}
+
+func newNotifyNewFriendApply() proto.Message {
+	return &NotifyNewFriendApply{}
+}
+
+func newNotifyClientMessage() proto.Message {
+	return &NotifyClientMessage{}
+}
+
+func newNotifyAccountUpdate() proto.Message {
+	return &NotifyAccountUpdate{}
+}
+
+func newNotifyAnotherLogin() proto.Message {
+	return &NotifyAnotherLogin{}
+}
+
+func newNotifyAccountLogout() proto.Message {
+	return &NotifyAccountLogout{}
+}
+
+func newNotifyAnnouncementUpdate() proto.Message {
+	return &NotifyAnnouncementUpdate{}
+}
+
+func newNotifyNewMail() proto.Message {
+	return &NotifyNewMail{}
+}
+
+func newNotifyDeleteMail() proto.Message {
+	return &NotifyDeleteMail{}
+}
+
+func newNotifyReviveCoinUpdate() proto.Message {
+	return &NotifyReviveCoinUpdate{}
+}
+
+func newNotifyDailyTaskUpdate() proto.Message {
+	return &NotifyDailyTaskUpdate{}
+}
+
+func newNotifyActivityTaskUpdate() proto.Message {
+	return &NotifyActivityTaskUpdate{}
+}
+
+func newNotifyActivityPeriodTaskUpdate() proto.Message {
+	return &NotifyActivityPeriodTaskUpdate{}
+}
+
+func newNotifyAccountRandomTaskUpdate() proto.Message {
+	return &NotifyAccountRandomTaskUpdate{}
+}
+
+func newNotifyAccountChallengeTaskUpdate() proto.Message {
+	return &NotifyAccountChallengeTaskUpdate{}
+}
+
+func newNotifyNewComment() proto.Message {
+	return &NotifyNewComment{}
+}
+
+func newNotifyRollingNotice() proto.Message {
+	return &NotifyRollingNotice{}
+}
+
+func newNotifyGiftSendRefresh() proto.Message {
+	return &NotifyGiftSendRefresh{}
+}
+
+func newNotifyShopUpdate() proto.Message {
+	return &NotifyShopUpdate{}
+}
+
+func newNotifyVipLevelChange() proto.Message {
+	return &NotifyVipLevelChange{}
+}
+
+func newNotifyServerSetting() proto.Message {
+	return &NotifyServerSetting{}
+}
+
+func newNotifyPayResult() proto.Message {
+	return &NotifyPayResult{}
+}
+
+func newNotifyCustomContestAccountMsg() proto.Message {
+	return &NotifyCustomContestAccountMsg{}
+}
+
+func newNotifyCustomContestSystemMsg() proto.Message {
+	return &NotifyCustomContestSystemMsg{}
+}
+
+func newNotifyCustomContestState() proto.Message {
+	return &NotifyCustomContestState{}
+}
+
+func newNotifyActivityChange() proto.Message {
+	return &NotifyActivityChange{}
+}
+
+func newNotifyAFKResult() proto.Message {
+	return &NotifyAFKResult{}
 }

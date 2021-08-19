@@ -74,6 +74,14 @@ func (client *ContestManagerClient) ManageContest(pbReq *ReqManageContest) (*Res
 	return resMsg.(*ResManageContest), nil
 }
 
+func (client *ContestManagerClient) FetchContestInfo(pbReq *ReqCommon) (*ResManageContest, error) {
+	resMsg, err := client.CallMethod("lq.CustomizedContestManagerApi.fetchContestInfo", pbReq)
+	if err != nil {
+		return nil, err
+	}
+	return resMsg.(*ResManageContest), nil
+}
+
 func (client *ContestManagerClient) ExitManageContest(pbReq *ReqCommon) (*ResCommon, error) {
 	resMsg, err := client.CallMethod("lq.CustomizedContestManagerApi.exitManageContest", pbReq)
 	if err != nil {
@@ -272,4 +280,44 @@ func (client *ContestManagerClient) FetchCurrentRankList(pbReq *ReqCommon) (*Res
 		return nil, err
 	}
 	return resMsg.(*ResFetchCurrentRankList), nil
+}
+
+func (client *ContestManagerClient) FetchContestLastModify(pbReq *ReqCommon) (*ResFetchContestLastModify, error) {
+	resMsg, err := client.CallMethod("lq.CustomizedContestManagerApi.fetchContestLastModify", pbReq)
+	if err != nil {
+		return nil, err
+	}
+	return resMsg.(*ResFetchContestLastModify), nil
+}
+
+func (client *ContestManagerClient) FetchContestObserver(pbReq *ReqCommon) (*ResFetchContestObserver, error) {
+	resMsg, err := client.CallMethod("lq.CustomizedContestManagerApi.fetchContestObserver", pbReq)
+	if err != nil {
+		return nil, err
+	}
+	return resMsg.(*ResFetchContestObserver), nil
+}
+
+func (client *ContestManagerClient) AddContestObserver(pbReq *ReqAddContestObserver) (*ResAddContestObserver, error) {
+	resMsg, err := client.CallMethod("lq.CustomizedContestManagerApi.addContestObserver", pbReq)
+	if err != nil {
+		return nil, err
+	}
+	return resMsg.(*ResAddContestObserver), nil
+}
+
+func (client *ContestManagerClient) RemoveContestObserver(pbReq *ReqRemoveContestObserver) (*ResCommon, error) {
+	resMsg, err := client.CallMethod("lq.CustomizedContestManagerApi.removeContestObserver", pbReq)
+	if err != nil {
+		return nil, err
+	}
+	return resMsg.(*ResCommon), nil
+}
+
+func (client *ContestManagerClient) FetchContestChatHistory(pbReq *ReqCommon) (*ResFetchContestChatHistory, error) {
+	resMsg, err := client.CallMethod("lq.CustomizedContestManagerApi.fetchContestChatHistory", pbReq)
+	if err != nil {
+		return nil, err
+	}
+	return resMsg.(*ResFetchContestChatHistory), nil
 }
