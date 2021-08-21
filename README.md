@@ -8,6 +8,15 @@ MajsoulGo is a module for connecting to and communicating with Mahjong Soul's ga
   * [Handling notifications](#handling-notifications)
 - [Additional Links](#additional-links)
 
+## Installation
+
+If you have not downloaded and setup Go, you do so here: [https://golang.org/doc/install](https://golang.org/doc/install)
+
+To install majsoulgo, type this shell command:
+```
+go get github.com/oscarfzs/majsoulgo
+```
+
 ## Getting Started
 
 MajsoulGo provides two different clients for connecting to Majsoul's servers. The package `dhs` contains the client and protobuf message types for the contest management server. The package `lq` contains the client and protobuf message types for the game server.
