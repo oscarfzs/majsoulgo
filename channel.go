@@ -30,7 +30,7 @@ type MajsoulChannel struct {
 	Connection *websocket.Conn
 
 	//Mutex for coarse grained locking
-	mutexAll *sync.Mutex
+	mutexChannel *sync.Mutex
 
 	//Mutex for ensuring that only one goroutine can
 	//read and increment the msgIndex field
@@ -67,7 +67,7 @@ type MajsoulChannel struct {
 func NewMajsoulChannel() *MajsoulChannel {
 	m := new(MajsoulChannel)
 
-	m.mutexAll = new(sync.Mutex)
+	m.mutexChannel = new(sync.Mutex)
 	m.mutexMsgIndex = new(sync.Mutex)
 
 	m.responses = make(map[uint16](chan []byte))
@@ -89,12 +89,17 @@ MahjongSoul server can be obtained by using the functions defined in majsoul.go
 After successfully connecting, the channel can be closed by calling MajsoulChannel.Close()
 */
 func (m *MajsoulChannel) Connect(url string) error {
-	m.mutexAll.Lock()
+	m.mutexChannel.Lock()
+	if m.isopen {
+		m.mutexChannel.Unlock()
+		return errors.New("error: already connected")
+	}
 
 	var err error
 	m.Connection, _, err = websocket.DefaultDialer.Dial(url, nil)
 
 	if err != nil {
+		m.mutexChannel.Unlock()
 		return err
 	}
 
@@ -113,7 +118,7 @@ func (m *MajsoulChannel) Connect(url string) error {
 
 	log.Println("Successfully connected to", url)
 
-	m.mutexAll.Unlock()
+	m.mutexChannel.Unlock()
 
 	for {
 		select {
@@ -168,14 +173,14 @@ into the close channel. A nil value passed into the channel indicates that the
 channel was closed by the application and not due to encountering any errors.
 */
 func (m *MajsoulChannel) Close(err error) {
-	m.mutexAll.Lock()
+	m.mutexChannel.Lock()
 	if m.isopen {
 		m.exitValue = err
 		m.isopen = false
 		close(m.stop)
 		log.Println("Majsoul channel closed.")
 	}
-	m.mutexAll.Unlock()
+	m.mutexChannel.Unlock()
 }
 
 func (m *MajsoulChannel) IsOpen() bool {
