@@ -2,10 +2,11 @@ package majsoultest
 
 import (
 	"log"
-	"majsoulgo/dhs"
-	"majsoulgo/mjs"
 	"testing"
 	"time"
+
+	"github.com/oscarfzs/majsoulgo/dhs"
+	"github.com/oscarfzs/majsoulgo/mjs"
 )
 
 func TestReconnect(t *testing.T) {

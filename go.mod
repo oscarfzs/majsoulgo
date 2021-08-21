@@ -1,4 +1,4 @@
-module majsoulgo
+module github.com/oscarfzs/majsoulgo
 
 go 1.16
 

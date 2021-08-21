@@ -3,9 +3,10 @@ package dhs
 import (
 	"fmt"
 	"log"
-	"majsoulgo/mjs"
-	"majsoulgo/mjsproto"
 	"strings"
+
+	"github.com/oscarfzs/majsoulgo/mjs"
+	"github.com/oscarfzs/majsoulgo/mjsproto"
 
 	"google.golang.org/protobuf/proto"
 )
