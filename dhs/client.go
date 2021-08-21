@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/oscarfzs/majsoulgo"
+	"github.com/oscarfzs/majsoulgo/dhsproto"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -46,7 +47,7 @@ func (client *ContestManagerClient) CallMethod(methodFullName string, pbReq prot
 		return nil, err
 	}
 
-	outputName, err := majsoulgo.FindMethodOutputName(File_dhs_proto, methodFullName)
+	outputName, err := majsoulgo.FindMethodOutputName(dhsproto.File_dhs_proto, methodFullName)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +103,7 @@ func (client *ContestManagerClient) processNotification(msg []byte) {
 }
 
 func wrap(name string, msg []byte) ([]byte, error) {
-	wrapped := &Wrapper{
+	wrapped := &dhsproto.Wrapper{
 		Name: fmt.Sprintf(".%s", name),
 		Data: msg,
 	}
@@ -116,7 +117,7 @@ func wrap(name string, msg []byte) ([]byte, error) {
 }
 
 func unwrap(msg []byte) (string, []byte, error) {
-	wrapped := &Wrapper{}
+	wrapped := &dhsproto.Wrapper{}
 	err := proto.Unmarshal(msg, wrapped)
 	if err != nil {
 		return "", nil, err

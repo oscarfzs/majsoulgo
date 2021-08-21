@@ -2,7 +2,10 @@
 
 package lq
 
-import "google.golang.org/protobuf/proto"
+import (
+	"github.com/oscarfzs/majsoulgo/lqproto"
+	"google.golang.org/protobuf/proto"
+)
 
 var NewMessageByName = map[string]func() proto.Message{
 	"NotifyCaptcha":                         newNotifyCaptcha,
@@ -77,7 +80,7 @@ var NewMessageByName = map[string]func() proto.Message{
 	"OpenResult":                            newOpenResult,
 	"RewardPlusResult":                      newRewardPlusResult,
 	"ExecuteReward":                         newExecuteReward,
-	"I18NContext":                           newI18NContext,
+	"I18nContext":                           newI18NContext,
 	"Mail":                                  newMail,
 	"AchievementProgress":                   newAchievementProgress,
 	"AccountStatisticByGameMode":            newAccountStatisticByGameMode,
@@ -561,2213 +564,2213 @@ var NewMessageByName = map[string]func() proto.Message{
 }
 
 func newNotifyCaptcha() proto.Message {
-	return &NotifyCaptcha{}
+	return &lqproto.NotifyCaptcha{}
 }
 
 func newNotifyRoomGameStart() proto.Message {
-	return &NotifyRoomGameStart{}
+	return &lqproto.NotifyRoomGameStart{}
 }
 
 func newNotifyMatchGameStart() proto.Message {
-	return &NotifyMatchGameStart{}
+	return &lqproto.NotifyMatchGameStart{}
 }
 
 func newNotifyRoomPlayerReady() proto.Message {
-	return &NotifyRoomPlayerReady{}
+	return &lqproto.NotifyRoomPlayerReady{}
 }
 
 func newNotifyRoomPlayerDressing() proto.Message {
-	return &NotifyRoomPlayerDressing{}
+	return &lqproto.NotifyRoomPlayerDressing{}
 }
 
 func newNotifyRoomPlayerUpdate() proto.Message {
-	return &NotifyRoomPlayerUpdate{}
+	return &lqproto.NotifyRoomPlayerUpdate{}
 }
 
 func newNotifyRoomKickOut() proto.Message {
-	return &NotifyRoomKickOut{}
+	return &lqproto.NotifyRoomKickOut{}
 }
 
 func newNotifyFriendStateChange() proto.Message {
-	return &NotifyFriendStateChange{}
+	return &lqproto.NotifyFriendStateChange{}
 }
 
 func newNotifyFriendViewChange() proto.Message {
-	return &NotifyFriendViewChange{}
+	return &lqproto.NotifyFriendViewChange{}
 }
 
 func newNotifyFriendChange() proto.Message {
-	return &NotifyFriendChange{}
+	return &lqproto.NotifyFriendChange{}
 }
 
 func newNotifyNewFriendApply() proto.Message {
-	return &NotifyNewFriendApply{}
+	return &lqproto.NotifyNewFriendApply{}
 }
 
 func newNotifyClientMessage() proto.Message {
-	return &NotifyClientMessage{}
+	return &lqproto.NotifyClientMessage{}
 }
 
 func newNotifyAccountUpdate() proto.Message {
-	return &NotifyAccountUpdate{}
+	return &lqproto.NotifyAccountUpdate{}
 }
 
 func newNotifyAnotherLogin() proto.Message {
-	return &NotifyAnotherLogin{}
+	return &lqproto.NotifyAnotherLogin{}
 }
 
 func newNotifyAccountLogout() proto.Message {
-	return &NotifyAccountLogout{}
+	return &lqproto.NotifyAccountLogout{}
 }
 
 func newNotifyAnnouncementUpdate() proto.Message {
-	return &NotifyAnnouncementUpdate{}
+	return &lqproto.NotifyAnnouncementUpdate{}
 }
 
 func newNotifyNewMail() proto.Message {
-	return &NotifyNewMail{}
+	return &lqproto.NotifyNewMail{}
 }
 
 func newNotifyDeleteMail() proto.Message {
-	return &NotifyDeleteMail{}
+	return &lqproto.NotifyDeleteMail{}
 }
 
 func newNotifyReviveCoinUpdate() proto.Message {
-	return &NotifyReviveCoinUpdate{}
+	return &lqproto.NotifyReviveCoinUpdate{}
 }
 
 func newNotifyDailyTaskUpdate() proto.Message {
-	return &NotifyDailyTaskUpdate{}
+	return &lqproto.NotifyDailyTaskUpdate{}
 }
 
 func newNotifyActivityTaskUpdate() proto.Message {
-	return &NotifyActivityTaskUpdate{}
+	return &lqproto.NotifyActivityTaskUpdate{}
 }
 
 func newNotifyActivityPeriodTaskUpdate() proto.Message {
-	return &NotifyActivityPeriodTaskUpdate{}
+	return &lqproto.NotifyActivityPeriodTaskUpdate{}
 }
 
 func newNotifyAccountRandomTaskUpdate() proto.Message {
-	return &NotifyAccountRandomTaskUpdate{}
+	return &lqproto.NotifyAccountRandomTaskUpdate{}
 }
 
 func newNotifyAccountChallengeTaskUpdate() proto.Message {
-	return &NotifyAccountChallengeTaskUpdate{}
+	return &lqproto.NotifyAccountChallengeTaskUpdate{}
 }
 
 func newNotifyNewComment() proto.Message {
-	return &NotifyNewComment{}
+	return &lqproto.NotifyNewComment{}
 }
 
 func newNotifyRollingNotice() proto.Message {
-	return &NotifyRollingNotice{}
+	return &lqproto.NotifyRollingNotice{}
 }
 
 func newNotifyGiftSendRefresh() proto.Message {
-	return &NotifyGiftSendRefresh{}
+	return &lqproto.NotifyGiftSendRefresh{}
 }
 
 func newNotifyShopUpdate() proto.Message {
-	return &NotifyShopUpdate{}
+	return &lqproto.NotifyShopUpdate{}
 }
 
 func newNotifyVipLevelChange() proto.Message {
-	return &NotifyVipLevelChange{}
+	return &lqproto.NotifyVipLevelChange{}
 }
 
 func newNotifyServerSetting() proto.Message {
-	return &NotifyServerSetting{}
+	return &lqproto.NotifyServerSetting{}
 }
 
 func newNotifyPayResult() proto.Message {
-	return &NotifyPayResult{}
+	return &lqproto.NotifyPayResult{}
 }
 
 func newNotifyCustomContestAccountMsg() proto.Message {
-	return &NotifyCustomContestAccountMsg{}
+	return &lqproto.NotifyCustomContestAccountMsg{}
 }
 
 func newNotifyCustomContestSystemMsg() proto.Message {
-	return &NotifyCustomContestSystemMsg{}
+	return &lqproto.NotifyCustomContestSystemMsg{}
 }
 
 func newNotifyMatchTimeout() proto.Message {
-	return &NotifyMatchTimeout{}
+	return &lqproto.NotifyMatchTimeout{}
 }
 
 func newNotifyCustomContestState() proto.Message {
-	return &NotifyCustomContestState{}
+	return &lqproto.NotifyCustomContestState{}
 }
 
 func newNotifyActivityChange() proto.Message {
-	return &NotifyActivityChange{}
+	return &lqproto.NotifyActivityChange{}
 }
 
 func newNotifyAFKResult() proto.Message {
-	return &NotifyAFKResult{}
+	return &lqproto.NotifyAFKResult{}
 }
 
 func newError() proto.Message {
-	return &Error{}
+	return &lqproto.Error{}
 }
 
 func newWrapper() proto.Message {
-	return &Wrapper{}
+	return &lqproto.Wrapper{}
 }
 
 func newNetworkEndpoint() proto.Message {
-	return &NetworkEndpoint{}
+	return &lqproto.NetworkEndpoint{}
 }
 
 func newReqCommon() proto.Message {
-	return &ReqCommon{}
+	return &lqproto.ReqCommon{}
 }
 
 func newResCommon() proto.Message {
-	return &ResCommon{}
+	return &lqproto.ResCommon{}
 }
 
 func newResAccountUpdate() proto.Message {
-	return &ResAccountUpdate{}
+	return &lqproto.ResAccountUpdate{}
 }
 
 func newAntiAddiction() proto.Message {
-	return &AntiAddiction{}
+	return &lqproto.AntiAddiction{}
 }
 
 func newAccountMahjongStatistic() proto.Message {
-	return &AccountMahjongStatistic{}
+	return &lqproto.AccountMahjongStatistic{}
 }
 
 func newAccountStatisticData() proto.Message {
-	return &AccountStatisticData{}
+	return &lqproto.AccountStatisticData{}
 }
 
 func newAccountLevel() proto.Message {
-	return &AccountLevel{}
+	return &lqproto.AccountLevel{}
 }
 
 func newViewSlot() proto.Message {
-	return &ViewSlot{}
+	return &lqproto.ViewSlot{}
 }
 
 func newAccount() proto.Message {
-	return &Account{}
+	return &lqproto.Account{}
 }
 
 func newAccountOwnerData() proto.Message {
-	return &AccountOwnerData{}
+	return &lqproto.AccountOwnerData{}
 }
 
 func newAccountUpdate() proto.Message {
-	return &AccountUpdate{}
+	return &lqproto.AccountUpdate{}
 }
 
 func newGameMetaData() proto.Message {
-	return &GameMetaData{}
+	return &lqproto.GameMetaData{}
 }
 
 func newAccountPlayingGame() proto.Message {
-	return &AccountPlayingGame{}
+	return &lqproto.AccountPlayingGame{}
 }
 
 func newAccountCacheView() proto.Message {
-	return &AccountCacheView{}
+	return &lqproto.AccountCacheView{}
 }
 
 func newPlayerBaseView() proto.Message {
-	return &PlayerBaseView{}
+	return &lqproto.PlayerBaseView{}
 }
 
 func newPlayerGameView() proto.Message {
-	return &PlayerGameView{}
+	return &lqproto.PlayerGameView{}
 }
 
 func newGameSetting() proto.Message {
-	return &GameSetting{}
+	return &lqproto.GameSetting{}
 }
 
 func newGameMode() proto.Message {
-	return &GameMode{}
+	return &lqproto.GameMode{}
 }
 
 func newGameTestingEnvironmentSet() proto.Message {
-	return &GameTestingEnvironmentSet{}
+	return &lqproto.GameTestingEnvironmentSet{}
 }
 
 func newGameDetailRule() proto.Message {
-	return &GameDetailRule{}
+	return &lqproto.GameDetailRule{}
 }
 
 func newRoom() proto.Message {
-	return &Room{}
+	return &lqproto.Room{}
 }
 
 func newGameEndResult() proto.Message {
-	return &GameEndResult{}
+	return &lqproto.GameEndResult{}
 }
 
 func newGameConnectInfo() proto.Message {
-	return &GameConnectInfo{}
+	return &lqproto.GameConnectInfo{}
 }
 
 func newItemGainRecord() proto.Message {
-	return &ItemGainRecord{}
+	return &lqproto.ItemGainRecord{}
 }
 
 func newItemGainRecords() proto.Message {
-	return &ItemGainRecords{}
+	return &lqproto.ItemGainRecords{}
 }
 
 func newItem() proto.Message {
-	return &Item{}
+	return &lqproto.Item{}
 }
 
 func newBag() proto.Message {
-	return &Bag{}
+	return &lqproto.Bag{}
 }
 
 func newBagUpdate() proto.Message {
-	return &BagUpdate{}
+	return &lqproto.BagUpdate{}
 }
 
 func newRewardSlot() proto.Message {
-	return &RewardSlot{}
+	return &lqproto.RewardSlot{}
 }
 
 func newOpenResult() proto.Message {
-	return &OpenResult{}
+	return &lqproto.OpenResult{}
 }
 
 func newRewardPlusResult() proto.Message {
-	return &RewardPlusResult{}
+	return &lqproto.RewardPlusResult{}
 }
 
 func newExecuteReward() proto.Message {
-	return &ExecuteReward{}
+	return &lqproto.ExecuteReward{}
 }
 
 func newI18NContext() proto.Message {
-	return &I18NContext{}
+	return &lqproto.I18NContext{}
 }
 
 func newMail() proto.Message {
-	return &Mail{}
+	return &lqproto.Mail{}
 }
 
 func newAchievementProgress() proto.Message {
-	return &AchievementProgress{}
+	return &lqproto.AchievementProgress{}
 }
 
 func newAccountStatisticByGameMode() proto.Message {
-	return &AccountStatisticByGameMode{}
+	return &lqproto.AccountStatisticByGameMode{}
 }
 
 func newAccountStatisticByFan() proto.Message {
-	return &AccountStatisticByFan{}
+	return &lqproto.AccountStatisticByFan{}
 }
 
 func newAccountFanAchieved() proto.Message {
-	return &AccountFanAchieved{}
+	return &lqproto.AccountFanAchieved{}
 }
 
 func newAccountDetailStatistic() proto.Message {
-	return &AccountDetailStatistic{}
+	return &lqproto.AccountDetailStatistic{}
 }
 
 func newAccountDetailStatisticByCategory() proto.Message {
-	return &AccountDetailStatisticByCategory{}
+	return &lqproto.AccountDetailStatisticByCategory{}
 }
 
 func newAccountDetailStatisticV2() proto.Message {
-	return &AccountDetailStatisticV2{}
+	return &lqproto.AccountDetailStatisticV2{}
 }
 
 func newAccountShiLian() proto.Message {
-	return &AccountShiLian{}
+	return &lqproto.AccountShiLian{}
 }
 
 func newClientDeviceInfo() proto.Message {
-	return &ClientDeviceInfo{}
+	return &lqproto.ClientDeviceInfo{}
 }
 
 func newClientVersionInfo() proto.Message {
-	return &ClientVersionInfo{}
+	return &lqproto.ClientVersionInfo{}
 }
 
 func newAnnouncement() proto.Message {
-	return &Announcement{}
+	return &lqproto.Announcement{}
 }
 
 func newTaskProgress() proto.Message {
-	return &TaskProgress{}
+	return &lqproto.TaskProgress{}
 }
 
 func newGameConfig() proto.Message {
-	return &GameConfig{}
+	return &lqproto.GameConfig{}
 }
 
 func newAccountActiveState() proto.Message {
-	return &AccountActiveState{}
+	return &lqproto.AccountActiveState{}
 }
 
 func newFriend() proto.Message {
-	return &Friend{}
+	return &lqproto.Friend{}
 }
 
 func newPoint() proto.Message {
-	return &Point{}
+	return &lqproto.Point{}
 }
 
 func newMineReward() proto.Message {
-	return &MineReward{}
+	return &lqproto.MineReward{}
 }
 
 func newGameLiveUnit() proto.Message {
-	return &GameLiveUnit{}
+	return &lqproto.GameLiveUnit{}
 }
 
 func newGameLiveSegment() proto.Message {
-	return &GameLiveSegment{}
+	return &lqproto.GameLiveSegment{}
 }
 
 func newGameLiveSegmentUri() proto.Message {
-	return &GameLiveSegmentUri{}
+	return &lqproto.GameLiveSegmentUri{}
 }
 
 func newGameLiveHead() proto.Message {
-	return &GameLiveHead{}
+	return &lqproto.GameLiveHead{}
 }
 
 func newGameNewRoundState() proto.Message {
-	return &GameNewRoundState{}
+	return &lqproto.GameNewRoundState{}
 }
 
 func newGameEndAction() proto.Message {
-	return &GameEndAction{}
+	return &lqproto.GameEndAction{}
 }
 
 func newGameNoopAction() proto.Message {
-	return &GameNoopAction{}
+	return &lqproto.GameNoopAction{}
 }
 
 func newCommentItem() proto.Message {
-	return &CommentItem{}
+	return &lqproto.CommentItem{}
 }
 
 func newRollingNotice() proto.Message {
-	return &RollingNotice{}
+	return &lqproto.RollingNotice{}
 }
 
 func newBillingGoods() proto.Message {
-	return &BillingGoods{}
+	return &lqproto.BillingGoods{}
 }
 
 func newBillShortcut() proto.Message {
-	return &BillShortcut{}
+	return &lqproto.BillShortcut{}
 }
 
 func newBillingProduct() proto.Message {
-	return &BillingProduct{}
+	return &lqproto.BillingProduct{}
 }
 
 func newCharacter() proto.Message {
-	return &Character{}
+	return &lqproto.Character{}
 }
 
 func newBuyRecord() proto.Message {
-	return &BuyRecord{}
+	return &lqproto.BuyRecord{}
 }
 
 func newZHPShop() proto.Message {
-	return &ZHPShop{}
+	return &lqproto.ZHPShop{}
 }
 
 func newMonthTicketInfo() proto.Message {
-	return &MonthTicketInfo{}
+	return &lqproto.MonthTicketInfo{}
 }
 
 func newShopInfo() proto.Message {
-	return &ShopInfo{}
+	return &lqproto.ShopInfo{}
 }
 
 func newChangeNicknameRecord() proto.Message {
-	return &ChangeNicknameRecord{}
+	return &lqproto.ChangeNicknameRecord{}
 }
 
 func newServerSettings() proto.Message {
-	return &ServerSettings{}
+	return &lqproto.ServerSettings{}
 }
 
 func newNicknameSetting() proto.Message {
-	return &NicknameSetting{}
+	return &lqproto.NicknameSetting{}
 }
 
 func newPaymentSettingV2() proto.Message {
-	return &PaymentSettingV2{}
+	return &lqproto.PaymentSettingV2{}
 }
 
 func newPaymentSetting() proto.Message {
-	return &PaymentSetting{}
+	return &lqproto.PaymentSetting{}
 }
 
 func newAccountSetting() proto.Message {
-	return &AccountSetting{}
+	return &lqproto.AccountSetting{}
 }
 
 func newChestData() proto.Message {
-	return &ChestData{}
+	return &lqproto.ChestData{}
 }
 
 func newChestDataV2() proto.Message {
-	return &ChestDataV2{}
+	return &lqproto.ChestDataV2{}
 }
 
 func newFaithData() proto.Message {
-	return &FaithData{}
+	return &lqproto.FaithData{}
 }
 
 func newCustomizedContestBase() proto.Message {
-	return &CustomizedContestBase{}
+	return &lqproto.CustomizedContestBase{}
 }
 
 func newCustomizedContestExtend() proto.Message {
-	return &CustomizedContestExtend{}
+	return &lqproto.CustomizedContestExtend{}
 }
 
 func newCustomizedContestAbstract() proto.Message {
-	return &CustomizedContestAbstract{}
+	return &lqproto.CustomizedContestAbstract{}
 }
 
 func newCustomizedContestDetail() proto.Message {
-	return &CustomizedContestDetail{}
+	return &lqproto.CustomizedContestDetail{}
 }
 
 func newCustomizedContestPlayerReport() proto.Message {
-	return &CustomizedContestPlayerReport{}
+	return &lqproto.CustomizedContestPlayerReport{}
 }
 
 func newRecordGame() proto.Message {
-	return &RecordGame{}
+	return &lqproto.RecordGame{}
 }
 
 func newCustomizedContestGameStart() proto.Message {
-	return &CustomizedContestGameStart{}
+	return &lqproto.CustomizedContestGameStart{}
 }
 
 func newCustomizedContestGameEnd() proto.Message {
-	return &CustomizedContestGameEnd{}
+	return &lqproto.CustomizedContestGameEnd{}
 }
 
 func newActivity() proto.Message {
-	return &Activity{}
+	return &lqproto.Activity{}
 }
 
 func newExchangeRecord() proto.Message {
-	return &ExchangeRecord{}
+	return &lqproto.ExchangeRecord{}
 }
 
 func newActivityAccumulatedPointData() proto.Message {
-	return &ActivityAccumulatedPointData{}
+	return &lqproto.ActivityAccumulatedPointData{}
 }
 
 func newActivityRankPointData() proto.Message {
-	return &ActivityRankPointData{}
+	return &lqproto.ActivityRankPointData{}
 }
 
 func newGameRoundHuData() proto.Message {
-	return &GameRoundHuData{}
+	return &lqproto.GameRoundHuData{}
 }
 
 func newGameRoundPlayerResult() proto.Message {
-	return &GameRoundPlayerResult{}
+	return &lqproto.GameRoundPlayerResult{}
 }
 
 func newGameRoundPlayer() proto.Message {
-	return &GameRoundPlayer{}
+	return &lqproto.GameRoundPlayer{}
 }
 
 func newGameRoundSnapshot() proto.Message {
-	return &GameRoundSnapshot{}
+	return &lqproto.GameRoundSnapshot{}
 }
 
 func newGameFinalSnapshot() proto.Message {
-	return &GameFinalSnapshot{}
+	return &lqproto.GameFinalSnapshot{}
 }
 
 func newRecordCollectedData() proto.Message {
-	return &RecordCollectedData{}
+	return &lqproto.RecordCollectedData{}
 }
 
 func newContestDetailRule() proto.Message {
-	return &ContestDetailRule{}
+	return &lqproto.ContestDetailRule{}
 }
 
 func newContestDetailRuleV2() proto.Message {
-	return &ContestDetailRuleV2{}
+	return &lqproto.ContestDetailRuleV2{}
 }
 
 func newGameRuleSetting() proto.Message {
-	return &GameRuleSetting{}
+	return &lqproto.GameRuleSetting{}
 }
 
 func newRecordTingPaiInfo() proto.Message {
-	return &RecordTingPaiInfo{}
+	return &lqproto.RecordTingPaiInfo{}
 }
 
 func newRecordNoTilePlayerInfo() proto.Message {
-	return &RecordNoTilePlayerInfo{}
+	return &lqproto.RecordNoTilePlayerInfo{}
 }
 
 func newRecordHuleInfo() proto.Message {
-	return &RecordHuleInfo{}
+	return &lqproto.RecordHuleInfo{}
 }
 
 func newRecordHulesInfo() proto.Message {
-	return &RecordHulesInfo{}
+	return &lqproto.RecordHulesInfo{}
 }
 
 func newRecordLiujuInfo() proto.Message {
-	return &RecordLiujuInfo{}
+	return &lqproto.RecordLiujuInfo{}
 }
 
 func newRecordNoTileInfo() proto.Message {
-	return &RecordNoTileInfo{}
+	return &lqproto.RecordNoTileInfo{}
 }
 
 func newRecordLiqiInfo() proto.Message {
-	return &RecordLiqiInfo{}
+	return &lqproto.RecordLiqiInfo{}
 }
 
 func newRecordGangInfo() proto.Message {
-	return &RecordGangInfo{}
+	return &lqproto.RecordGangInfo{}
 }
 
 func newRecordBaBeiInfo() proto.Message {
-	return &RecordBaBeiInfo{}
+	return &lqproto.RecordBaBeiInfo{}
 }
 
 func newRecordPeiPaiInfo() proto.Message {
-	return &RecordPeiPaiInfo{}
+	return &lqproto.RecordPeiPaiInfo{}
 }
 
 func newRecordRoundInfo() proto.Message {
-	return &RecordRoundInfo{}
+	return &lqproto.RecordRoundInfo{}
 }
 
 func newRecordAnalysisedData() proto.Message {
-	return &RecordAnalysisedData{}
+	return &lqproto.RecordAnalysisedData{}
 }
 
 func newResConnectionInfo() proto.Message {
-	return &ResConnectionInfo{}
+	return &lqproto.ResConnectionInfo{}
 }
 
 func newReqSignupAccount() proto.Message {
-	return &ReqSignupAccount{}
+	return &lqproto.ReqSignupAccount{}
 }
 
 func newResSignupAccount() proto.Message {
-	return &ResSignupAccount{}
+	return &lqproto.ResSignupAccount{}
 }
 
 func newReqLogin() proto.Message {
-	return &ReqLogin{}
+	return &lqproto.ReqLogin{}
 }
 
 func newResLogin() proto.Message {
-	return &ResLogin{}
+	return &lqproto.ResLogin{}
 }
 
 func newReqEmailLogin() proto.Message {
-	return &ReqEmailLogin{}
+	return &lqproto.ReqEmailLogin{}
 }
 
 func newReqBindAccount() proto.Message {
-	return &ReqBindAccount{}
+	return &lqproto.ReqBindAccount{}
 }
 
 func newReqCreatePhoneVerifyCode() proto.Message {
-	return &ReqCreatePhoneVerifyCode{}
+	return &lqproto.ReqCreatePhoneVerifyCode{}
 }
 
 func newReqCreateEmailVerifyCode() proto.Message {
-	return &ReqCreateEmailVerifyCode{}
+	return &lqproto.ReqCreateEmailVerifyCode{}
 }
 
 func newReqVerifyCodeForSecure() proto.Message {
-	return &ReqVerifyCodeForSecure{}
+	return &lqproto.ReqVerifyCodeForSecure{}
 }
 
 func newResVerfiyCodeForSecure() proto.Message {
-	return &ResVerfiyCodeForSecure{}
+	return &lqproto.ResVerfiyCodeForSecure{}
 }
 
 func newReqBindPhoneNumber() proto.Message {
-	return &ReqBindPhoneNumber{}
+	return &lqproto.ReqBindPhoneNumber{}
 }
 
 func newReqUnbindPhoneNumber() proto.Message {
-	return &ReqUnbindPhoneNumber{}
+	return &lqproto.ReqUnbindPhoneNumber{}
 }
 
 func newResFetchPhoneLoginBind() proto.Message {
-	return &ResFetchPhoneLoginBind{}
+	return &lqproto.ResFetchPhoneLoginBind{}
 }
 
 func newReqCreatePhoneLoginBind() proto.Message {
-	return &ReqCreatePhoneLoginBind{}
+	return &lqproto.ReqCreatePhoneLoginBind{}
 }
 
 func newReqBindEmail() proto.Message {
-	return &ReqBindEmail{}
+	return &lqproto.ReqBindEmail{}
 }
 
 func newReqModifyPassword() proto.Message {
-	return &ReqModifyPassword{}
+	return &lqproto.ReqModifyPassword{}
 }
 
 func newReqOauth2Auth() proto.Message {
-	return &ReqOauth2Auth{}
+	return &lqproto.ReqOauth2Auth{}
 }
 
 func newResOauth2Auth() proto.Message {
-	return &ResOauth2Auth{}
+	return &lqproto.ResOauth2Auth{}
 }
 
 func newReqOauth2Check() proto.Message {
-	return &ReqOauth2Check{}
+	return &lqproto.ReqOauth2Check{}
 }
 
 func newResOauth2Check() proto.Message {
-	return &ResOauth2Check{}
+	return &lqproto.ResOauth2Check{}
 }
 
 func newReqOauth2Signup() proto.Message {
-	return &ReqOauth2Signup{}
+	return &lqproto.ReqOauth2Signup{}
 }
 
 func newResOauth2Signup() proto.Message {
-	return &ResOauth2Signup{}
+	return &lqproto.ResOauth2Signup{}
 }
 
 func newReqOauth2Login() proto.Message {
-	return &ReqOauth2Login{}
+	return &lqproto.ReqOauth2Login{}
 }
 
 func newReqDMMPreLogin() proto.Message {
-	return &ReqDMMPreLogin{}
+	return &lqproto.ReqDMMPreLogin{}
 }
 
 func newResDMMPreLogin() proto.Message {
-	return &ResDMMPreLogin{}
+	return &lqproto.ResDMMPreLogin{}
 }
 
 func newReqLogout() proto.Message {
-	return &ReqLogout{}
+	return &lqproto.ReqLogout{}
 }
 
 func newResLogout() proto.Message {
-	return &ResLogout{}
+	return &lqproto.ResLogout{}
 }
 
 func newReqHeatBeat() proto.Message {
-	return &ReqHeatBeat{}
+	return &lqproto.ReqHeatBeat{}
 }
 
 func newReqLoginBeat() proto.Message {
-	return &ReqLoginBeat{}
+	return &lqproto.ReqLoginBeat{}
 }
 
 func newReqJoinMatchQueue() proto.Message {
-	return &ReqJoinMatchQueue{}
+	return &lqproto.ReqJoinMatchQueue{}
 }
 
 func newReqCancelMatchQueue() proto.Message {
-	return &ReqCancelMatchQueue{}
+	return &lqproto.ReqCancelMatchQueue{}
 }
 
 func newReqAccountInfo() proto.Message {
-	return &ReqAccountInfo{}
+	return &lqproto.ReqAccountInfo{}
 }
 
 func newResAccountInfo() proto.Message {
-	return &ResAccountInfo{}
+	return &lqproto.ResAccountInfo{}
 }
 
 func newReqCreateNickname() proto.Message {
-	return &ReqCreateNickname{}
+	return &lqproto.ReqCreateNickname{}
 }
 
 func newReqModifyNickname() proto.Message {
-	return &ReqModifyNickname{}
+	return &lqproto.ReqModifyNickname{}
 }
 
 func newReqModifyBirthday() proto.Message {
-	return &ReqModifyBirthday{}
+	return &lqproto.ReqModifyBirthday{}
 }
 
 func newResSelfRoom() proto.Message {
-	return &ResSelfRoom{}
+	return &lqproto.ResSelfRoom{}
 }
 
 func newReqCreateRoom() proto.Message {
-	return &ReqCreateRoom{}
+	return &lqproto.ReqCreateRoom{}
 }
 
 func newResCreateRoom() proto.Message {
-	return &ResCreateRoom{}
+	return &lqproto.ResCreateRoom{}
 }
 
 func newReqJoinRoom() proto.Message {
-	return &ReqJoinRoom{}
+	return &lqproto.ReqJoinRoom{}
 }
 
 func newResJoinRoom() proto.Message {
-	return &ResJoinRoom{}
+	return &lqproto.ResJoinRoom{}
 }
 
 func newReqRoomReady() proto.Message {
-	return &ReqRoomReady{}
+	return &lqproto.ReqRoomReady{}
 }
 
 func newReqRoomDressing() proto.Message {
-	return &ReqRoomDressing{}
+	return &lqproto.ReqRoomDressing{}
 }
 
 func newReqRoomStart() proto.Message {
-	return &ReqRoomStart{}
+	return &lqproto.ReqRoomStart{}
 }
 
 func newReqRoomKick() proto.Message {
-	return &ReqRoomKick{}
+	return &lqproto.ReqRoomKick{}
 }
 
 func newReqModifyRoom() proto.Message {
-	return &ReqModifyRoom{}
+	return &lqproto.ReqModifyRoom{}
 }
 
 func newReqChangeAvatar() proto.Message {
-	return &ReqChangeAvatar{}
+	return &lqproto.ReqChangeAvatar{}
 }
 
 func newReqAccountStatisticInfo() proto.Message {
-	return &ReqAccountStatisticInfo{}
+	return &lqproto.ReqAccountStatisticInfo{}
 }
 
 func newResAccountStatisticInfo() proto.Message {
-	return &ResAccountStatisticInfo{}
+	return &lqproto.ResAccountStatisticInfo{}
 }
 
 func newResAccountChallengeRankInfo() proto.Message {
-	return &ResAccountChallengeRankInfo{}
+	return &lqproto.ResAccountChallengeRankInfo{}
 }
 
 func newResAccountCharacterInfo() proto.Message {
-	return &ResAccountCharacterInfo{}
+	return &lqproto.ResAccountCharacterInfo{}
 }
 
 func newReqShopPurchase() proto.Message {
-	return &ReqShopPurchase{}
+	return &lqproto.ReqShopPurchase{}
 }
 
 func newResShopPurchase() proto.Message {
-	return &ResShopPurchase{}
+	return &lqproto.ResShopPurchase{}
 }
 
 func newReqGameRecord() proto.Message {
-	return &ReqGameRecord{}
+	return &lqproto.ReqGameRecord{}
 }
 
 func newResGameRecord() proto.Message {
-	return &ResGameRecord{}
+	return &lqproto.ResGameRecord{}
 }
 
 func newReqGameRecordList() proto.Message {
-	return &ReqGameRecordList{}
+	return &lqproto.ReqGameRecordList{}
 }
 
 func newResGameRecordList() proto.Message {
-	return &ResGameRecordList{}
+	return &lqproto.ResGameRecordList{}
 }
 
 func newResCollectedGameRecordList() proto.Message {
-	return &ResCollectedGameRecordList{}
+	return &lqproto.ResCollectedGameRecordList{}
 }
 
 func newReqGameRecordsDetail() proto.Message {
-	return &ReqGameRecordsDetail{}
+	return &lqproto.ReqGameRecordsDetail{}
 }
 
 func newResGameRecordsDetail() proto.Message {
-	return &ResGameRecordsDetail{}
+	return &lqproto.ResGameRecordsDetail{}
 }
 
 func newReqAddCollectedGameRecord() proto.Message {
-	return &ReqAddCollectedGameRecord{}
+	return &lqproto.ReqAddCollectedGameRecord{}
 }
 
 func newResAddCollectedGameRecord() proto.Message {
-	return &ResAddCollectedGameRecord{}
+	return &lqproto.ResAddCollectedGameRecord{}
 }
 
 func newReqRemoveCollectedGameRecord() proto.Message {
-	return &ReqRemoveCollectedGameRecord{}
+	return &lqproto.ReqRemoveCollectedGameRecord{}
 }
 
 func newResRemoveCollectedGameRecord() proto.Message {
-	return &ResRemoveCollectedGameRecord{}
+	return &lqproto.ResRemoveCollectedGameRecord{}
 }
 
 func newReqChangeCollectedGameRecordRemarks() proto.Message {
-	return &ReqChangeCollectedGameRecordRemarks{}
+	return &lqproto.ReqChangeCollectedGameRecordRemarks{}
 }
 
 func newResChangeCollectedGameRecordRemarks() proto.Message {
-	return &ResChangeCollectedGameRecordRemarks{}
+	return &lqproto.ResChangeCollectedGameRecordRemarks{}
 }
 
 func newReqLevelLeaderboard() proto.Message {
-	return &ReqLevelLeaderboard{}
+	return &lqproto.ReqLevelLeaderboard{}
 }
 
 func newResLevelLeaderboard() proto.Message {
-	return &ResLevelLeaderboard{}
+	return &lqproto.ResLevelLeaderboard{}
 }
 
 func newReqChallangeLeaderboard() proto.Message {
-	return &ReqChallangeLeaderboard{}
+	return &lqproto.ReqChallangeLeaderboard{}
 }
 
 func newResChallengeLeaderboard() proto.Message {
-	return &ResChallengeLeaderboard{}
+	return &lqproto.ResChallengeLeaderboard{}
 }
 
 func newReqMutiChallengeLevel() proto.Message {
-	return &ReqMutiChallengeLevel{}
+	return &lqproto.ReqMutiChallengeLevel{}
 }
 
 func newResMutiChallengeLevel() proto.Message {
-	return &ResMutiChallengeLevel{}
+	return &lqproto.ResMutiChallengeLevel{}
 }
 
 func newReqMultiAccountId() proto.Message {
-	return &ReqMultiAccountId{}
+	return &lqproto.ReqMultiAccountId{}
 }
 
 func newResMultiAccountBrief() proto.Message {
-	return &ResMultiAccountBrief{}
+	return &lqproto.ResMultiAccountBrief{}
 }
 
 func newResFriendList() proto.Message {
-	return &ResFriendList{}
+	return &lqproto.ResFriendList{}
 }
 
 func newResFriendApplyList() proto.Message {
-	return &ResFriendApplyList{}
+	return &lqproto.ResFriendApplyList{}
 }
 
 func newReqApplyFriend() proto.Message {
-	return &ReqApplyFriend{}
+	return &lqproto.ReqApplyFriend{}
 }
 
 func newReqHandleFriendApply() proto.Message {
-	return &ReqHandleFriendApply{}
+	return &lqproto.ReqHandleFriendApply{}
 }
 
 func newReqRemoveFriend() proto.Message {
-	return &ReqRemoveFriend{}
+	return &lqproto.ReqRemoveFriend{}
 }
 
 func newReqSearchAccountByPattern() proto.Message {
-	return &ReqSearchAccountByPattern{}
+	return &lqproto.ReqSearchAccountByPattern{}
 }
 
 func newResSearchAccountByPattern() proto.Message {
-	return &ResSearchAccountByPattern{}
+	return &lqproto.ResSearchAccountByPattern{}
 }
 
 func newReqAccountList() proto.Message {
-	return &ReqAccountList{}
+	return &lqproto.ReqAccountList{}
 }
 
 func newResAccountStates() proto.Message {
-	return &ResAccountStates{}
+	return &lqproto.ResAccountStates{}
 }
 
 func newReqSearchAccountById() proto.Message {
-	return &ReqSearchAccountById{}
+	return &lqproto.ReqSearchAccountById{}
 }
 
 func newResSearchAccountById() proto.Message {
-	return &ResSearchAccountById{}
+	return &lqproto.ResSearchAccountById{}
 }
 
 func newResBagInfo() proto.Message {
-	return &ResBagInfo{}
+	return &lqproto.ResBagInfo{}
 }
 
 func newReqUseBagItem() proto.Message {
-	return &ReqUseBagItem{}
+	return &lqproto.ReqUseBagItem{}
 }
 
 func newReqOpenManualItem() proto.Message {
-	return &ReqOpenManualItem{}
+	return &lqproto.ReqOpenManualItem{}
 }
 
 func newReqOpenRandomRewardItem() proto.Message {
-	return &ReqOpenRandomRewardItem{}
+	return &lqproto.ReqOpenRandomRewardItem{}
 }
 
 func newResOpenRandomRewardItem() proto.Message {
-	return &ResOpenRandomRewardItem{}
+	return &lqproto.ResOpenRandomRewardItem{}
 }
 
 func newReqOpenAllRewardItem() proto.Message {
-	return &ReqOpenAllRewardItem{}
+	return &lqproto.ReqOpenAllRewardItem{}
 }
 
 func newResOpenAllRewardItem() proto.Message {
-	return &ResOpenAllRewardItem{}
+	return &lqproto.ResOpenAllRewardItem{}
 }
 
 func newReqComposeShard() proto.Message {
-	return &ReqComposeShard{}
+	return &lqproto.ReqComposeShard{}
 }
 
 func newReqFetchAnnouncement() proto.Message {
-	return &ReqFetchAnnouncement{}
+	return &lqproto.ReqFetchAnnouncement{}
 }
 
 func newResAnnouncement() proto.Message {
-	return &ResAnnouncement{}
+	return &lqproto.ResAnnouncement{}
 }
 
 func newResMailInfo() proto.Message {
-	return &ResMailInfo{}
+	return &lqproto.ResMailInfo{}
 }
 
 func newReqReadMail() proto.Message {
-	return &ReqReadMail{}
+	return &lqproto.ReqReadMail{}
 }
 
 func newReqDeleteMail() proto.Message {
-	return &ReqDeleteMail{}
+	return &lqproto.ReqDeleteMail{}
 }
 
 func newReqTakeAttachment() proto.Message {
-	return &ReqTakeAttachment{}
+	return &lqproto.ReqTakeAttachment{}
 }
 
 func newReqReceiveAchievementGroupReward() proto.Message {
-	return &ReqReceiveAchievementGroupReward{}
+	return &lqproto.ReqReceiveAchievementGroupReward{}
 }
 
 func newResReceiveAchievementGroupReward() proto.Message {
-	return &ResReceiveAchievementGroupReward{}
+	return &lqproto.ResReceiveAchievementGroupReward{}
 }
 
 func newReqReceiveAchievementReward() proto.Message {
-	return &ReqReceiveAchievementReward{}
+	return &lqproto.ReqReceiveAchievementReward{}
 }
 
 func newResReceiveAchievementReward() proto.Message {
-	return &ResReceiveAchievementReward{}
+	return &lqproto.ResReceiveAchievementReward{}
 }
 
 func newResFetchAchievementRate() proto.Message {
-	return &ResFetchAchievementRate{}
+	return &lqproto.ResFetchAchievementRate{}
 }
 
 func newResAchievement() proto.Message {
-	return &ResAchievement{}
+	return &lqproto.ResAchievement{}
 }
 
 func newResTitleList() proto.Message {
-	return &ResTitleList{}
+	return &lqproto.ResTitleList{}
 }
 
 func newReqUseTitle() proto.Message {
-	return &ReqUseTitle{}
+	return &lqproto.ReqUseTitle{}
 }
 
 func newReqBuyShiLian() proto.Message {
-	return &ReqBuyShiLian{}
+	return &lqproto.ReqBuyShiLian{}
 }
 
 func newReqUpdateClientValue() proto.Message {
-	return &ReqUpdateClientValue{}
+	return &lqproto.ReqUpdateClientValue{}
 }
 
 func newResClientValue() proto.Message {
-	return &ResClientValue{}
+	return &lqproto.ResClientValue{}
 }
 
 func newReqClientMessage() proto.Message {
-	return &ReqClientMessage{}
+	return &lqproto.ReqClientMessage{}
 }
 
 func newReqCurrentMatchInfo() proto.Message {
-	return &ReqCurrentMatchInfo{}
+	return &lqproto.ReqCurrentMatchInfo{}
 }
 
 func newResCurrentMatchInfo() proto.Message {
-	return &ResCurrentMatchInfo{}
+	return &lqproto.ResCurrentMatchInfo{}
 }
 
 func newReqUserComplain() proto.Message {
-	return &ReqUserComplain{}
+	return &lqproto.ReqUserComplain{}
 }
 
 func newReqReadAnnouncement() proto.Message {
-	return &ReqReadAnnouncement{}
+	return &lqproto.ReqReadAnnouncement{}
 }
 
 func newResReviveCoinInfo() proto.Message {
-	return &ResReviveCoinInfo{}
+	return &lqproto.ResReviveCoinInfo{}
 }
 
 func newResDailyTask() proto.Message {
-	return &ResDailyTask{}
+	return &lqproto.ResDailyTask{}
 }
 
 func newReqRefreshDailyTask() proto.Message {
-	return &ReqRefreshDailyTask{}
+	return &lqproto.ReqRefreshDailyTask{}
 }
 
 func newResRefreshDailyTask() proto.Message {
-	return &ResRefreshDailyTask{}
+	return &lqproto.ResRefreshDailyTask{}
 }
 
 func newReqUseGiftCode() proto.Message {
-	return &ReqUseGiftCode{}
+	return &lqproto.ReqUseGiftCode{}
 }
 
 func newResUseGiftCode() proto.Message {
-	return &ResUseGiftCode{}
+	return &lqproto.ResUseGiftCode{}
 }
 
 func newResUseSpecialGiftCode() proto.Message {
-	return &ResUseSpecialGiftCode{}
+	return &lqproto.ResUseSpecialGiftCode{}
 }
 
 func newReqSendClientMessage() proto.Message {
-	return &ReqSendClientMessage{}
+	return &lqproto.ReqSendClientMessage{}
 }
 
 func newReqGameLiveInfo() proto.Message {
-	return &ReqGameLiveInfo{}
+	return &lqproto.ReqGameLiveInfo{}
 }
 
 func newResGameLiveInfo() proto.Message {
-	return &ResGameLiveInfo{}
+	return &lqproto.ResGameLiveInfo{}
 }
 
 func newReqGameLiveLeftSegment() proto.Message {
-	return &ReqGameLiveLeftSegment{}
+	return &lqproto.ReqGameLiveLeftSegment{}
 }
 
 func newResGameLiveLeftSegment() proto.Message {
-	return &ResGameLiveLeftSegment{}
+	return &lqproto.ResGameLiveLeftSegment{}
 }
 
 func newReqGameLiveList() proto.Message {
-	return &ReqGameLiveList{}
+	return &lqproto.ReqGameLiveList{}
 }
 
 func newResGameLiveList() proto.Message {
-	return &ResGameLiveList{}
+	return &lqproto.ResGameLiveList{}
 }
 
 func newResCommentSetting() proto.Message {
-	return &ResCommentSetting{}
+	return &lqproto.ResCommentSetting{}
 }
 
 func newReqUpdateCommentSetting() proto.Message {
-	return &ReqUpdateCommentSetting{}
+	return &lqproto.ReqUpdateCommentSetting{}
 }
 
 func newReqFetchCommentList() proto.Message {
-	return &ReqFetchCommentList{}
+	return &lqproto.ReqFetchCommentList{}
 }
 
 func newResFetchCommentList() proto.Message {
-	return &ResFetchCommentList{}
+	return &lqproto.ResFetchCommentList{}
 }
 
 func newReqFetchCommentContent() proto.Message {
-	return &ReqFetchCommentContent{}
+	return &lqproto.ReqFetchCommentContent{}
 }
 
 func newResFetchCommentContent() proto.Message {
-	return &ResFetchCommentContent{}
+	return &lqproto.ResFetchCommentContent{}
 }
 
 func newReqLeaveComment() proto.Message {
-	return &ReqLeaveComment{}
+	return &lqproto.ReqLeaveComment{}
 }
 
 func newReqDeleteComment() proto.Message {
-	return &ReqDeleteComment{}
+	return &lqproto.ReqDeleteComment{}
 }
 
 func newReqUpdateReadComment() proto.Message {
-	return &ReqUpdateReadComment{}
+	return &lqproto.ReqUpdateReadComment{}
 }
 
 func newReqRollingNotice() proto.Message {
-	return &ReqRollingNotice{}
+	return &lqproto.ReqRollingNotice{}
 }
 
 func newResServerTime() proto.Message {
-	return &ResServerTime{}
+	return &lqproto.ResServerTime{}
 }
 
 func newReqPlatformBillingProducts() proto.Message {
-	return &ReqPlatformBillingProducts{}
+	return &lqproto.ReqPlatformBillingProducts{}
 }
 
 func newResPlatformBillingProducts() proto.Message {
-	return &ResPlatformBillingProducts{}
+	return &lqproto.ResPlatformBillingProducts{}
 }
 
 func newReqCreateBillingOrder() proto.Message {
-	return &ReqCreateBillingOrder{}
+	return &lqproto.ReqCreateBillingOrder{}
 }
 
 func newResCreateBillingOrder() proto.Message {
-	return &ResCreateBillingOrder{}
+	return &lqproto.ResCreateBillingOrder{}
 }
 
 func newReqSolveGooglePlayOrder() proto.Message {
-	return &ReqSolveGooglePlayOrder{}
+	return &lqproto.ReqSolveGooglePlayOrder{}
 }
 
 func newReqSolveGooglePlayOrderV3() proto.Message {
-	return &ReqSolveGooglePlayOrderV3{}
+	return &lqproto.ReqSolveGooglePlayOrderV3{}
 }
 
 func newReqCancelGooglePlayOrder() proto.Message {
-	return &ReqCancelGooglePlayOrder{}
+	return &lqproto.ReqCancelGooglePlayOrder{}
 }
 
 func newReqCreateWechatNativeOrder() proto.Message {
-	return &ReqCreateWechatNativeOrder{}
+	return &lqproto.ReqCreateWechatNativeOrder{}
 }
 
 func newResCreateWechatNativeOrder() proto.Message {
-	return &ResCreateWechatNativeOrder{}
+	return &lqproto.ResCreateWechatNativeOrder{}
 }
 
 func newReqCreateWechatAppOrder() proto.Message {
-	return &ReqCreateWechatAppOrder{}
+	return &lqproto.ReqCreateWechatAppOrder{}
 }
 
 func newResCreateWechatAppOrder() proto.Message {
-	return &ResCreateWechatAppOrder{}
+	return &lqproto.ResCreateWechatAppOrder{}
 }
 
 func newReqCreateAlipayOrder() proto.Message {
-	return &ReqCreateAlipayOrder{}
+	return &lqproto.ReqCreateAlipayOrder{}
 }
 
 func newResCreateAlipayOrder() proto.Message {
-	return &ResCreateAlipayOrder{}
+	return &lqproto.ResCreateAlipayOrder{}
 }
 
 func newReqCreateAlipayScanOrder() proto.Message {
-	return &ReqCreateAlipayScanOrder{}
+	return &lqproto.ReqCreateAlipayScanOrder{}
 }
 
 func newResCreateAlipayScanOrder() proto.Message {
-	return &ResCreateAlipayScanOrder{}
+	return &lqproto.ResCreateAlipayScanOrder{}
 }
 
 func newReqCreateAlipayAppOrder() proto.Message {
-	return &ReqCreateAlipayAppOrder{}
+	return &lqproto.ReqCreateAlipayAppOrder{}
 }
 
 func newResCreateAlipayAppOrder() proto.Message {
-	return &ResCreateAlipayAppOrder{}
+	return &lqproto.ResCreateAlipayAppOrder{}
 }
 
 func newReqCreateJPCreditCardOrder() proto.Message {
-	return &ReqCreateJPCreditCardOrder{}
+	return &lqproto.ReqCreateJPCreditCardOrder{}
 }
 
 func newResCreateJPCreditCardOrder() proto.Message {
-	return &ResCreateJPCreditCardOrder{}
+	return &lqproto.ResCreateJPCreditCardOrder{}
 }
 
 func newReqCreateJPPaypalOrder() proto.Message {
-	return &ReqCreateJPPaypalOrder{}
+	return &lqproto.ReqCreateJPPaypalOrder{}
 }
 
 func newResCreateJPPaypalOrder() proto.Message {
-	return &ResCreateJPPaypalOrder{}
+	return &lqproto.ResCreateJPPaypalOrder{}
 }
 
 func newReqCreateJPAuOrder() proto.Message {
-	return &ReqCreateJPAuOrder{}
+	return &lqproto.ReqCreateJPAuOrder{}
 }
 
 func newResCreateJPAuOrder() proto.Message {
-	return &ResCreateJPAuOrder{}
+	return &lqproto.ResCreateJPAuOrder{}
 }
 
 func newReqCreateJPDocomoOrder() proto.Message {
-	return &ReqCreateJPDocomoOrder{}
+	return &lqproto.ReqCreateJPDocomoOrder{}
 }
 
 func newResCreateJPDocomoOrder() proto.Message {
-	return &ResCreateJPDocomoOrder{}
+	return &lqproto.ResCreateJPDocomoOrder{}
 }
 
 func newReqCreateJPWebMoneyOrder() proto.Message {
-	return &ReqCreateJPWebMoneyOrder{}
+	return &lqproto.ReqCreateJPWebMoneyOrder{}
 }
 
 func newResCreateJPWebMoneyOrder() proto.Message {
-	return &ResCreateJPWebMoneyOrder{}
+	return &lqproto.ResCreateJPWebMoneyOrder{}
 }
 
 func newReqCreateJPSoftbankOrder() proto.Message {
-	return &ReqCreateJPSoftbankOrder{}
+	return &lqproto.ReqCreateJPSoftbankOrder{}
 }
 
 func newResCreateJPSoftbankOrder() proto.Message {
-	return &ResCreateJPSoftbankOrder{}
+	return &lqproto.ResCreateJPSoftbankOrder{}
 }
 
 func newReqCreateYostarOrder() proto.Message {
-	return &ReqCreateYostarOrder{}
+	return &lqproto.ReqCreateYostarOrder{}
 }
 
 func newResCreateYostarOrder() proto.Message {
-	return &ResCreateYostarOrder{}
+	return &lqproto.ResCreateYostarOrder{}
 }
 
 func newReqCreateENPaypalOrder() proto.Message {
-	return &ReqCreateENPaypalOrder{}
+	return &lqproto.ReqCreateENPaypalOrder{}
 }
 
 func newResCreateENPaypalOrder() proto.Message {
-	return &ResCreateENPaypalOrder{}
+	return &lqproto.ResCreateENPaypalOrder{}
 }
 
 func newReqCreateENJCBOrder() proto.Message {
-	return &ReqCreateENJCBOrder{}
+	return &lqproto.ReqCreateENJCBOrder{}
 }
 
 func newResCreateENJCBOrder() proto.Message {
-	return &ResCreateENJCBOrder{}
+	return &lqproto.ResCreateENJCBOrder{}
 }
 
 func newReqCreateENMasterCardOrder() proto.Message {
-	return &ReqCreateENMasterCardOrder{}
+	return &lqproto.ReqCreateENMasterCardOrder{}
 }
 
 func newResCreateENMasterCardOrder() proto.Message {
-	return &ResCreateENMasterCardOrder{}
+	return &lqproto.ResCreateENMasterCardOrder{}
 }
 
 func newReqCreateENVisaOrder() proto.Message {
-	return &ReqCreateENVisaOrder{}
+	return &lqproto.ReqCreateENVisaOrder{}
 }
 
 func newResCreateENVisaOrder() proto.Message {
-	return &ResCreateENVisaOrder{}
+	return &lqproto.ResCreateENVisaOrder{}
 }
 
 func newReqCreateENAlipayOrder() proto.Message {
-	return &ReqCreateENAlipayOrder{}
+	return &lqproto.ReqCreateENAlipayOrder{}
 }
 
 func newResCreateENAlipayOrder() proto.Message {
-	return &ResCreateENAlipayOrder{}
+	return &lqproto.ResCreateENAlipayOrder{}
 }
 
 func newReqCreateDMMOrder() proto.Message {
-	return &ReqCreateDMMOrder{}
+	return &lqproto.ReqCreateDMMOrder{}
 }
 
 func newResCreateDmmOrder() proto.Message {
-	return &ResCreateDmmOrder{}
+	return &lqproto.ResCreateDmmOrder{}
 }
 
 func newReqCreateIAPOrder() proto.Message {
-	return &ReqCreateIAPOrder{}
+	return &lqproto.ReqCreateIAPOrder{}
 }
 
 func newResCreateIAPOrder() proto.Message {
-	return &ResCreateIAPOrder{}
+	return &lqproto.ResCreateIAPOrder{}
 }
 
 func newReqVerificationIAPOrder() proto.Message {
-	return &ReqVerificationIAPOrder{}
+	return &lqproto.ReqVerificationIAPOrder{}
 }
 
 func newResVerificationIAPOrder() proto.Message {
-	return &ResVerificationIAPOrder{}
+	return &lqproto.ResVerificationIAPOrder{}
 }
 
 func newReqCreateSteamOrder() proto.Message {
-	return &ReqCreateSteamOrder{}
+	return &lqproto.ReqCreateSteamOrder{}
 }
 
 func newResCreateSteamOrder() proto.Message {
-	return &ResCreateSteamOrder{}
+	return &lqproto.ResCreateSteamOrder{}
 }
 
 func newReqVerifySteamOrder() proto.Message {
-	return &ReqVerifySteamOrder{}
+	return &lqproto.ReqVerifySteamOrder{}
 }
 
 func newReqCreateMyCardOrder() proto.Message {
-	return &ReqCreateMyCardOrder{}
+	return &lqproto.ReqCreateMyCardOrder{}
 }
 
 func newResCreateMyCardOrder() proto.Message {
-	return &ResCreateMyCardOrder{}
+	return &lqproto.ResCreateMyCardOrder{}
 }
 
 func newReqVerifyMyCardOrder() proto.Message {
-	return &ReqVerifyMyCardOrder{}
+	return &lqproto.ReqVerifyMyCardOrder{}
 }
 
 func newReqCreatePaypalOrder() proto.Message {
-	return &ReqCreatePaypalOrder{}
+	return &lqproto.ReqCreatePaypalOrder{}
 }
 
 func newResCreatePaypalOrder() proto.Message {
-	return &ResCreatePaypalOrder{}
+	return &lqproto.ResCreatePaypalOrder{}
 }
 
 func newReqCreateXsollaOrder() proto.Message {
-	return &ReqCreateXsollaOrder{}
+	return &lqproto.ReqCreateXsollaOrder{}
 }
 
 func newResCreateXsollaOrder() proto.Message {
-	return &ResCreateXsollaOrder{}
+	return &lqproto.ResCreateXsollaOrder{}
 }
 
 func newReqOpenChest() proto.Message {
-	return &ReqOpenChest{}
+	return &lqproto.ReqOpenChest{}
 }
 
 func newResOpenChest() proto.Message {
-	return &ResOpenChest{}
+	return &lqproto.ResOpenChest{}
 }
 
 func newReqBuyFromChestShop() proto.Message {
-	return &ReqBuyFromChestShop{}
+	return &lqproto.ReqBuyFromChestShop{}
 }
 
 func newResBuyFromChestShop() proto.Message {
-	return &ResBuyFromChestShop{}
+	return &lqproto.ResBuyFromChestShop{}
 }
 
 func newResDailySignInInfo() proto.Message {
-	return &ResDailySignInInfo{}
+	return &lqproto.ResDailySignInInfo{}
 }
 
 func newReqDoActivitySignIn() proto.Message {
-	return &ReqDoActivitySignIn{}
+	return &lqproto.ReqDoActivitySignIn{}
 }
 
 func newResDoActivitySignIn() proto.Message {
-	return &ResDoActivitySignIn{}
+	return &lqproto.ResDoActivitySignIn{}
 }
 
 func newResCharacterInfo() proto.Message {
-	return &ResCharacterInfo{}
+	return &lqproto.ResCharacterInfo{}
 }
 
 func newReqUpdateCharacterSort() proto.Message {
-	return &ReqUpdateCharacterSort{}
+	return &lqproto.ReqUpdateCharacterSort{}
 }
 
 func newReqChangeMainCharacter() proto.Message {
-	return &ReqChangeMainCharacter{}
+	return &lqproto.ReqChangeMainCharacter{}
 }
 
 func newReqChangeCharacterSkin() proto.Message {
-	return &ReqChangeCharacterSkin{}
+	return &lqproto.ReqChangeCharacterSkin{}
 }
 
 func newReqChangeCharacterView() proto.Message {
-	return &ReqChangeCharacterView{}
+	return &lqproto.ReqChangeCharacterView{}
 }
 
 func newReqSendGiftToCharacter() proto.Message {
-	return &ReqSendGiftToCharacter{}
+	return &lqproto.ReqSendGiftToCharacter{}
 }
 
 func newResSendGiftToCharacter() proto.Message {
-	return &ResSendGiftToCharacter{}
+	return &lqproto.ResSendGiftToCharacter{}
 }
 
 func newReqSellItem() proto.Message {
-	return &ReqSellItem{}
+	return &lqproto.ReqSellItem{}
 }
 
 func newResCommonView() proto.Message {
-	return &ResCommonView{}
+	return &lqproto.ResCommonView{}
 }
 
 func newReqChangeCommonView() proto.Message {
-	return &ReqChangeCommonView{}
+	return &lqproto.ReqChangeCommonView{}
 }
 
 func newReqSaveCommonViews() proto.Message {
-	return &ReqSaveCommonViews{}
+	return &lqproto.ReqSaveCommonViews{}
 }
 
 func newReqCommonViews() proto.Message {
-	return &ReqCommonViews{}
+	return &lqproto.ReqCommonViews{}
 }
 
 func newResCommonViews() proto.Message {
-	return &ResCommonViews{}
+	return &lqproto.ResCommonViews{}
 }
 
 func newResAllcommonViews() proto.Message {
-	return &ResAllcommonViews{}
+	return &lqproto.ResAllcommonViews{}
 }
 
 func newReqUseCommonView() proto.Message {
-	return &ReqUseCommonView{}
+	return &lqproto.ReqUseCommonView{}
 }
 
 func newReqUpgradeCharacter() proto.Message {
-	return &ReqUpgradeCharacter{}
+	return &lqproto.ReqUpgradeCharacter{}
 }
 
 func newResUpgradeCharacter() proto.Message {
-	return &ResUpgradeCharacter{}
+	return &lqproto.ResUpgradeCharacter{}
 }
 
 func newReqFinishedEnding() proto.Message {
-	return &ReqFinishedEnding{}
+	return &lqproto.ReqFinishedEnding{}
 }
 
 func newReqGMCommand() proto.Message {
-	return &ReqGMCommand{}
+	return &lqproto.ReqGMCommand{}
 }
 
 func newResShopInfo() proto.Message {
-	return &ResShopInfo{}
+	return &lqproto.ResShopInfo{}
 }
 
 func newReqBuyFromShop() proto.Message {
-	return &ReqBuyFromShop{}
+	return &lqproto.ReqBuyFromShop{}
 }
 
 func newResBuyFromShop() proto.Message {
-	return &ResBuyFromShop{}
+	return &lqproto.ResBuyFromShop{}
 }
 
 func newReqBuyFromZHP() proto.Message {
-	return &ReqBuyFromZHP{}
+	return &lqproto.ReqBuyFromZHP{}
 }
 
 func newReqPayMonthTicket() proto.Message {
-	return &ReqPayMonthTicket{}
+	return &lqproto.ReqPayMonthTicket{}
 }
 
 func newResPayMonthTicket() proto.Message {
-	return &ResPayMonthTicket{}
+	return &lqproto.ResPayMonthTicket{}
 }
 
 func newReqReshZHPShop() proto.Message {
-	return &ReqReshZHPShop{}
+	return &lqproto.ReqReshZHPShop{}
 }
 
 func newResRefreshZHPShop() proto.Message {
-	return &ResRefreshZHPShop{}
+	return &lqproto.ResRefreshZHPShop{}
 }
 
 func newResMonthTicketInfo() proto.Message {
-	return &ResMonthTicketInfo{}
+	return &lqproto.ResMonthTicketInfo{}
 }
 
 func newReqExchangeCurrency() proto.Message {
-	return &ReqExchangeCurrency{}
+	return &lqproto.ReqExchangeCurrency{}
 }
 
 func newResServerSettings() proto.Message {
-	return &ResServerSettings{}
+	return &lqproto.ResServerSettings{}
 }
 
 func newResAccountSettings() proto.Message {
-	return &ResAccountSettings{}
+	return &lqproto.ResAccountSettings{}
 }
 
 func newReqUpdateAccountSettings() proto.Message {
-	return &ReqUpdateAccountSettings{}
+	return &lqproto.ReqUpdateAccountSettings{}
 }
 
 func newResModNicknameTime() proto.Message {
-	return &ResModNicknameTime{}
+	return &lqproto.ResModNicknameTime{}
 }
 
 func newResMisc() proto.Message {
-	return &ResMisc{}
+	return &lqproto.ResMisc{}
 }
 
 func newReqModifySignature() proto.Message {
-	return &ReqModifySignature{}
+	return &lqproto.ReqModifySignature{}
 }
 
 func newResIDCardInfo() proto.Message {
-	return &ResIDCardInfo{}
+	return &lqproto.ResIDCardInfo{}
 }
 
 func newReqUpdateIDCardInfo() proto.Message {
-	return &ReqUpdateIDCardInfo{}
+	return &lqproto.ReqUpdateIDCardInfo{}
 }
 
 func newResVipReward() proto.Message {
-	return &ResVipReward{}
+	return &lqproto.ResVipReward{}
 }
 
 func newResFetchRefundOrder() proto.Message {
-	return &ResFetchRefundOrder{}
+	return &lqproto.ResFetchRefundOrder{}
 }
 
 func newReqGainVipReward() proto.Message {
-	return &ReqGainVipReward{}
+	return &lqproto.ReqGainVipReward{}
 }
 
 func newReqFetchCustomizedContestList() proto.Message {
-	return &ReqFetchCustomizedContestList{}
+	return &lqproto.ReqFetchCustomizedContestList{}
 }
 
 func newResFetchCustomizedContestList() proto.Message {
-	return &ResFetchCustomizedContestList{}
+	return &lqproto.ResFetchCustomizedContestList{}
 }
 
 func newReqFetchCustomizedContestExtendInfo() proto.Message {
-	return &ReqFetchCustomizedContestExtendInfo{}
+	return &lqproto.ReqFetchCustomizedContestExtendInfo{}
 }
 
 func newResFetchCustomizedContestExtendInfo() proto.Message {
-	return &ResFetchCustomizedContestExtendInfo{}
+	return &lqproto.ResFetchCustomizedContestExtendInfo{}
 }
 
 func newReqFetchCustomizedContestAuthInfo() proto.Message {
-	return &ReqFetchCustomizedContestAuthInfo{}
+	return &lqproto.ReqFetchCustomizedContestAuthInfo{}
 }
 
 func newResFetchCustomizedContestAuthInfo() proto.Message {
-	return &ResFetchCustomizedContestAuthInfo{}
+	return &lqproto.ResFetchCustomizedContestAuthInfo{}
 }
 
 func newReqEnterCustomizedContest() proto.Message {
-	return &ReqEnterCustomizedContest{}
+	return &lqproto.ReqEnterCustomizedContest{}
 }
 
 func newResEnterCustomizedContest() proto.Message {
-	return &ResEnterCustomizedContest{}
+	return &lqproto.ResEnterCustomizedContest{}
 }
 
 func newReqFetchCustomizedContestOnlineInfo() proto.Message {
-	return &ReqFetchCustomizedContestOnlineInfo{}
+	return &lqproto.ReqFetchCustomizedContestOnlineInfo{}
 }
 
 func newResFetchCustomizedContestOnlineInfo() proto.Message {
-	return &ResFetchCustomizedContestOnlineInfo{}
+	return &lqproto.ResFetchCustomizedContestOnlineInfo{}
 }
 
 func newReqFetchCustomizedContestByContestId() proto.Message {
-	return &ReqFetchCustomizedContestByContestId{}
+	return &lqproto.ReqFetchCustomizedContestByContestId{}
 }
 
 func newResFetchCustomizedContestByContestId() proto.Message {
-	return &ResFetchCustomizedContestByContestId{}
+	return &lqproto.ResFetchCustomizedContestByContestId{}
 }
 
 func newReqStartCustomizedContest() proto.Message {
-	return &ReqStartCustomizedContest{}
+	return &lqproto.ReqStartCustomizedContest{}
 }
 
 func newReqJoinCustomizedContestChatRoom() proto.Message {
-	return &ReqJoinCustomizedContestChatRoom{}
+	return &lqproto.ReqJoinCustomizedContestChatRoom{}
 }
 
 func newResJoinCustomizedContestChatRoom() proto.Message {
-	return &ResJoinCustomizedContestChatRoom{}
+	return &lqproto.ResJoinCustomizedContestChatRoom{}
 }
 
 func newReqSayChatMessage() proto.Message {
-	return &ReqSayChatMessage{}
+	return &lqproto.ReqSayChatMessage{}
 }
 
 func newReqFetchCustomizedContestGameLiveList() proto.Message {
-	return &ReqFetchCustomizedContestGameLiveList{}
+	return &lqproto.ReqFetchCustomizedContestGameLiveList{}
 }
 
 func newResFetchCustomizedContestGameLiveList() proto.Message {
-	return &ResFetchCustomizedContestGameLiveList{}
+	return &lqproto.ResFetchCustomizedContestGameLiveList{}
 }
 
 func newReqFetchCustomizedContestGameRecords() proto.Message {
-	return &ReqFetchCustomizedContestGameRecords{}
+	return &lqproto.ReqFetchCustomizedContestGameRecords{}
 }
 
 func newResFetchCustomizedContestGameRecords() proto.Message {
-	return &ResFetchCustomizedContestGameRecords{}
+	return &lqproto.ResFetchCustomizedContestGameRecords{}
 }
 
 func newReqTargetCustomizedContest() proto.Message {
-	return &ReqTargetCustomizedContest{}
+	return &lqproto.ReqTargetCustomizedContest{}
 }
 
 func newResActivityList() proto.Message {
-	return &ResActivityList{}
+	return &lqproto.ResActivityList{}
 }
 
 func newResAccountActivityData() proto.Message {
-	return &ResAccountActivityData{}
+	return &lqproto.ResAccountActivityData{}
 }
 
 func newSNSBlog() proto.Message {
-	return &SNSBlog{}
+	return &lqproto.SNSBlog{}
 }
 
 func newSNSReply() proto.Message {
-	return &SNSReply{}
+	return &lqproto.SNSReply{}
 }
 
 func newReqExchangeActivityItem() proto.Message {
-	return &ReqExchangeActivityItem{}
+	return &lqproto.ReqExchangeActivityItem{}
 }
 
 func newResExchangeActivityItem() proto.Message {
-	return &ResExchangeActivityItem{}
+	return &lqproto.ResExchangeActivityItem{}
 }
 
 func newReqCompleteActivityTask() proto.Message {
-	return &ReqCompleteActivityTask{}
+	return &lqproto.ReqCompleteActivityTask{}
 }
 
 func newReqReceiveActivityFlipTask() proto.Message {
-	return &ReqReceiveActivityFlipTask{}
+	return &lqproto.ReqReceiveActivityFlipTask{}
 }
 
 func newResReceiveActivityFlipTask() proto.Message {
-	return &ResReceiveActivityFlipTask{}
+	return &lqproto.ResReceiveActivityFlipTask{}
 }
 
 func newReqFetchActivityFlipInfo() proto.Message {
-	return &ReqFetchActivityFlipInfo{}
+	return &lqproto.ReqFetchActivityFlipInfo{}
 }
 
 func newResFetchActivityFlipInfo() proto.Message {
-	return &ResFetchActivityFlipInfo{}
+	return &lqproto.ResFetchActivityFlipInfo{}
 }
 
 func newReqGainAccumulatedPointActivityReward() proto.Message {
-	return &ReqGainAccumulatedPointActivityReward{}
+	return &lqproto.ReqGainAccumulatedPointActivityReward{}
 }
 
 func newReqGainMultiPointActivityReward() proto.Message {
-	return &ReqGainMultiPointActivityReward{}
+	return &lqproto.ReqGainMultiPointActivityReward{}
 }
 
 func newReqFetchRankPointLeaderboard() proto.Message {
-	return &ReqFetchRankPointLeaderboard{}
+	return &lqproto.ReqFetchRankPointLeaderboard{}
 }
 
 func newResFetchRankPointLeaderboard() proto.Message {
-	return &ResFetchRankPointLeaderboard{}
+	return &lqproto.ResFetchRankPointLeaderboard{}
 }
 
 func newReqGainRankPointReward() proto.Message {
-	return &ReqGainRankPointReward{}
+	return &lqproto.ReqGainRankPointReward{}
 }
 
 func newReqRichmanNextMove() proto.Message {
-	return &ReqRichmanNextMove{}
+	return &lqproto.ReqRichmanNextMove{}
 }
 
 func newResRichmanNextMove() proto.Message {
-	return &ResRichmanNextMove{}
+	return &lqproto.ResRichmanNextMove{}
 }
 
 func newReqRichmanSpecialMove() proto.Message {
-	return &ReqRichmanSpecialMove{}
+	return &lqproto.ReqRichmanSpecialMove{}
 }
 
 func newReqRichmanChestInfo() proto.Message {
-	return &ReqRichmanChestInfo{}
+	return &lqproto.ReqRichmanChestInfo{}
 }
 
 func newResRichmanChestInfo() proto.Message {
-	return &ResRichmanChestInfo{}
+	return &lqproto.ResRichmanChestInfo{}
 }
 
 func newReqCreateGameObserveAuth() proto.Message {
-	return &ReqCreateGameObserveAuth{}
+	return &lqproto.ReqCreateGameObserveAuth{}
 }
 
 func newResCreateGameObserveAuth() proto.Message {
-	return &ResCreateGameObserveAuth{}
+	return &lqproto.ResCreateGameObserveAuth{}
 }
 
 func newReqRefreshGameObserveAuth() proto.Message {
-	return &ReqRefreshGameObserveAuth{}
+	return &lqproto.ReqRefreshGameObserveAuth{}
 }
 
 func newResRefreshGameObserveAuth() proto.Message {
-	return &ResRefreshGameObserveAuth{}
+	return &lqproto.ResRefreshGameObserveAuth{}
 }
 
 func newResActivityBuff() proto.Message {
-	return &ResActivityBuff{}
+	return &lqproto.ResActivityBuff{}
 }
 
 func newReqUpgradeActivityBuff() proto.Message {
-	return &ReqUpgradeActivityBuff{}
+	return &lqproto.ReqUpgradeActivityBuff{}
 }
 
 func newResUpgradeChallenge() proto.Message {
-	return &ResUpgradeChallenge{}
+	return &lqproto.ResUpgradeChallenge{}
 }
 
 func newResRefreshChallenge() proto.Message {
-	return &ResRefreshChallenge{}
+	return &lqproto.ResRefreshChallenge{}
 }
 
 func newResFetchChallengeInfo() proto.Message {
-	return &ResFetchChallengeInfo{}
+	return &lqproto.ResFetchChallengeInfo{}
 }
 
 func newReqForceCompleteChallengeTask() proto.Message {
-	return &ReqForceCompleteChallengeTask{}
+	return &lqproto.ReqForceCompleteChallengeTask{}
 }
 
 func newResFetchABMatch() proto.Message {
-	return &ResFetchABMatch{}
+	return &lqproto.ResFetchABMatch{}
 }
 
 func newReqStartUnifiedMatch() proto.Message {
-	return &ReqStartUnifiedMatch{}
+	return &lqproto.ReqStartUnifiedMatch{}
 }
 
 func newReqCancelUnifiedMatch() proto.Message {
-	return &ReqCancelUnifiedMatch{}
+	return &lqproto.ReqCancelUnifiedMatch{}
 }
 
 func newResChallengeSeasonInfo() proto.Message {
-	return &ResChallengeSeasonInfo{}
+	return &lqproto.ResChallengeSeasonInfo{}
 }
 
 func newReqReceiveChallengeRankReward() proto.Message {
-	return &ReqReceiveChallengeRankReward{}
+	return &lqproto.ReqReceiveChallengeRankReward{}
 }
 
 func newResReceiveChallengeRankReward() proto.Message {
-	return &ResReceiveChallengeRankReward{}
+	return &lqproto.ResReceiveChallengeRankReward{}
 }
 
 func newReqBuyInABMatch() proto.Message {
-	return &ReqBuyInABMatch{}
+	return &lqproto.ReqBuyInABMatch{}
 }
 
 func newReqGamePointRank() proto.Message {
-	return &ReqGamePointRank{}
+	return &lqproto.ReqGamePointRank{}
 }
 
 func newResGamePointRank() proto.Message {
-	return &ResGamePointRank{}
+	return &lqproto.ResGamePointRank{}
 }
 
 func newResFetchSelfGamePointRank() proto.Message {
-	return &ResFetchSelfGamePointRank{}
+	return &lqproto.ResFetchSelfGamePointRank{}
 }
 
 func newReqReadSNS() proto.Message {
-	return &ReqReadSNS{}
+	return &lqproto.ReqReadSNS{}
 }
 
 func newResReadSNS() proto.Message {
-	return &ResReadSNS{}
+	return &lqproto.ResReadSNS{}
 }
 
 func newReqReplySNS() proto.Message {
-	return &ReqReplySNS{}
+	return &lqproto.ReqReplySNS{}
 }
 
 func newResReplySNS() proto.Message {
-	return &ResReplySNS{}
+	return &lqproto.ResReplySNS{}
 }
 
 func newReqLikeSNS() proto.Message {
-	return &ReqLikeSNS{}
+	return &lqproto.ReqLikeSNS{}
 }
 
 func newResLikeSNS() proto.Message {
-	return &ResLikeSNS{}
+	return &lqproto.ResLikeSNS{}
 }
 
 func newReqDigMine() proto.Message {
-	return &ReqDigMine{}
+	return &lqproto.ReqDigMine{}
 }
 
 func newResDigMine() proto.Message {
-	return &ResDigMine{}
+	return &lqproto.ResDigMine{}
 }
 
 func newReqFetchLastPrivacy() proto.Message {
-	return &ReqFetchLastPrivacy{}
+	return &lqproto.ReqFetchLastPrivacy{}
 }
 
 func newResFetchLastPrivacy() proto.Message {
-	return &ResFetchLastPrivacy{}
+	return &lqproto.ResFetchLastPrivacy{}
 }
 
 func newReqCheckPrivacy() proto.Message {
-	return &ReqCheckPrivacy{}
+	return &lqproto.ReqCheckPrivacy{}
 }
 
 func newReqResponseCaptcha() proto.Message {
-	return &ReqResponseCaptcha{}
+	return &lqproto.ReqResponseCaptcha{}
 }
 
 func newActionMJStart() proto.Message {
-	return &ActionMJStart{}
+	return &lqproto.ActionMJStart{}
 }
 
 func newNewRoundOpenedTiles() proto.Message {
-	return &NewRoundOpenedTiles{}
+	return &lqproto.NewRoundOpenedTiles{}
 }
 
 func newMuyuInfo() proto.Message {
-	return &MuyuInfo{}
+	return &lqproto.MuyuInfo{}
 }
 
 func newChuanmaGang() proto.Message {
-	return &ChuanmaGang{}
+	return &lqproto.ChuanmaGang{}
 }
 
 func newActionNewRound() proto.Message {
-	return &ActionNewRound{}
+	return &lqproto.ActionNewRound{}
 }
 
 func newRecordNewRound() proto.Message {
-	return &RecordNewRound{}
+	return &lqproto.RecordNewRound{}
 }
 
 func newGameSnapshot() proto.Message {
-	return &GameSnapshot{}
+	return &lqproto.GameSnapshot{}
 }
 
 func newActionPrototype() proto.Message {
-	return &ActionPrototype{}
+	return &lqproto.ActionPrototype{}
 }
 
 func newGameDetailRecords() proto.Message {
-	return &GameDetailRecords{}
+	return &lqproto.GameDetailRecords{}
 }
 
 func newGameSelfOperation() proto.Message {
-	return &GameSelfOperation{}
+	return &lqproto.GameSelfOperation{}
 }
 
 func newGameChiPengGang() proto.Message {
-	return &GameChiPengGang{}
+	return &lqproto.GameChiPengGang{}
 }
 
 func newGameVoteGameEnd() proto.Message {
-	return &GameVoteGameEnd{}
+	return &lqproto.GameVoteGameEnd{}
 }
 
 func newGameUserInput() proto.Message {
-	return &GameUserInput{}
+	return &lqproto.GameUserInput{}
 }
 
 func newGameUserEvent() proto.Message {
-	return &GameUserEvent{}
+	return &lqproto.GameUserEvent{}
 }
 
 func newGameAction() proto.Message {
-	return &GameAction{}
+	return &lqproto.GameAction{}
 }
 
 func newOptionalOperation() proto.Message {
-	return &OptionalOperation{}
+	return &lqproto.OptionalOperation{}
 }
 
 func newOptionalOperationList() proto.Message {
-	return &OptionalOperationList{}
+	return &lqproto.OptionalOperationList{}
 }
 
 func newLiQiSuccess() proto.Message {
-	return &LiQiSuccess{}
+	return &lqproto.LiQiSuccess{}
 }
 
 func newFanInfo() proto.Message {
-	return &FanInfo{}
+	return &lqproto.FanInfo{}
 }
 
 func newHuleInfo() proto.Message {
-	return &HuleInfo{}
+	return &lqproto.HuleInfo{}
 }
 
 func newTingPaiInfo() proto.Message {
-	return &TingPaiInfo{}
+	return &lqproto.TingPaiInfo{}
 }
 
 func newTingPaiDiscardInfo() proto.Message {
-	return &TingPaiDiscardInfo{}
+	return &lqproto.TingPaiDiscardInfo{}
 }
 
 func newGameEnd() proto.Message {
-	return &GameEnd{}
+	return &lqproto.GameEnd{}
 }
 
 func newActionSelectGap() proto.Message {
-	return &ActionSelectGap{}
+	return &lqproto.ActionSelectGap{}
 }
 
 func newRecordSelectGap() proto.Message {
-	return &RecordSelectGap{}
+	return &lqproto.RecordSelectGap{}
 }
 
 func newActionChangeTile() proto.Message {
-	return &ActionChangeTile{}
+	return &lqproto.ActionChangeTile{}
 }
 
 func newRecordChangeTile() proto.Message {
-	return &RecordChangeTile{}
+	return &lqproto.RecordChangeTile{}
 }
 
 func newActionDiscardTile() proto.Message {
-	return &ActionDiscardTile{}
+	return &lqproto.ActionDiscardTile{}
 }
 
 func newRecordDiscardTile() proto.Message {
-	return &RecordDiscardTile{}
+	return &lqproto.RecordDiscardTile{}
 }
 
 func newActionDealTile() proto.Message {
-	return &ActionDealTile{}
+	return &lqproto.ActionDealTile{}
 }
 
 func newRecordDealTile() proto.Message {
-	return &RecordDealTile{}
+	return &lqproto.RecordDealTile{}
 }
 
 func newActionChiPengGang() proto.Message {
-	return &ActionChiPengGang{}
+	return &lqproto.ActionChiPengGang{}
 }
 
 func newRecordChiPengGang() proto.Message {
-	return &RecordChiPengGang{}
+	return &lqproto.RecordChiPengGang{}
 }
 
 func newActionGangResult() proto.Message {
-	return &ActionGangResult{}
+	return &lqproto.ActionGangResult{}
 }
 
 func newRecordGangResult() proto.Message {
-	return &RecordGangResult{}
+	return &lqproto.RecordGangResult{}
 }
 
 func newActionGangResultEnd() proto.Message {
-	return &ActionGangResultEnd{}
+	return &lqproto.ActionGangResultEnd{}
 }
 
 func newRecordGangResultEnd() proto.Message {
-	return &RecordGangResultEnd{}
+	return &lqproto.RecordGangResultEnd{}
 }
 
 func newActionAnGangAddGang() proto.Message {
-	return &ActionAnGangAddGang{}
+	return &lqproto.ActionAnGangAddGang{}
 }
 
 func newRecordAnGangAddGang() proto.Message {
-	return &RecordAnGangAddGang{}
+	return &lqproto.RecordAnGangAddGang{}
 }
 
 func newActionBaBei() proto.Message {
-	return &ActionBaBei{}
+	return &lqproto.ActionBaBei{}
 }
 
 func newRecordBaBei() proto.Message {
-	return &RecordBaBei{}
+	return &lqproto.RecordBaBei{}
 }
 
 func newActionHule() proto.Message {
-	return &ActionHule{}
+	return &lqproto.ActionHule{}
 }
 
 func newRecordHule() proto.Message {
-	return &RecordHule{}
+	return &lqproto.RecordHule{}
 }
 
 func newHuInfoXueZhanMid() proto.Message {
-	return &HuInfoXueZhanMid{}
+	return &lqproto.HuInfoXueZhanMid{}
 }
 
 func newActionHuleXueZhanMid() proto.Message {
-	return &ActionHuleXueZhanMid{}
+	return &lqproto.ActionHuleXueZhanMid{}
 }
 
 func newRecordHuleXueZhanMid() proto.Message {
-	return &RecordHuleXueZhanMid{}
+	return &lqproto.RecordHuleXueZhanMid{}
 }
 
 func newActionHuleXueZhanEnd() proto.Message {
-	return &ActionHuleXueZhanEnd{}
+	return &lqproto.ActionHuleXueZhanEnd{}
 }
 
 func newRecordHuleXueZhanEnd() proto.Message {
-	return &RecordHuleXueZhanEnd{}
+	return &lqproto.RecordHuleXueZhanEnd{}
 }
 
 func newActionLiuJu() proto.Message {
-	return &ActionLiuJu{}
+	return &lqproto.ActionLiuJu{}
 }
 
 func newRecordLiuJu() proto.Message {
-	return &RecordLiuJu{}
+	return &lqproto.RecordLiuJu{}
 }
 
 func newNoTilePlayerInfo() proto.Message {
-	return &NoTilePlayerInfo{}
+	return &lqproto.NoTilePlayerInfo{}
 }
 
 func newNoTileScoreInfo() proto.Message {
-	return &NoTileScoreInfo{}
+	return &lqproto.NoTileScoreInfo{}
 }
 
 func newActionNoTile() proto.Message {
-	return &ActionNoTile{}
+	return &lqproto.ActionNoTile{}
 }
 
 func newRecordNoTile() proto.Message {
-	return &RecordNoTile{}
+	return &lqproto.RecordNoTile{}
 }
 
 func newPlayerLeaving() proto.Message {
-	return &PlayerLeaving{}
+	return &lqproto.PlayerLeaving{}
 }
 
 func newReqAuthGame() proto.Message {
-	return &ReqAuthGame{}
+	return &lqproto.ReqAuthGame{}
 }
 
 func newResAuthGame() proto.Message {
-	return &ResAuthGame{}
+	return &lqproto.ResAuthGame{}
 }
 
 func newGameRestore() proto.Message {
-	return &GameRestore{}
+	return &lqproto.GameRestore{}
 }
 
 func newResEnterGame() proto.Message {
-	return &ResEnterGame{}
+	return &lqproto.ResEnterGame{}
 }
 
 func newReqSyncGame() proto.Message {
-	return &ReqSyncGame{}
+	return &lqproto.ReqSyncGame{}
 }
 
 func newResSyncGame() proto.Message {
-	return &ResSyncGame{}
+	return &lqproto.ResSyncGame{}
 }
 
 func newReqSelfOperation() proto.Message {
-	return &ReqSelfOperation{}
+	return &lqproto.ReqSelfOperation{}
 }
 
 func newReqChiPengGang() proto.Message {
-	return &ReqChiPengGang{}
+	return &lqproto.ReqChiPengGang{}
 }
 
 func newReqBroadcastInGame() proto.Message {
-	return &ReqBroadcastInGame{}
+	return &lqproto.ReqBroadcastInGame{}
 }
 
 func newReqGMCommandInGaming() proto.Message {
-	return &ReqGMCommandInGaming{}
+	return &lqproto.ReqGMCommandInGaming{}
 }
 
 func newResGamePlayerState() proto.Message {
-	return &ResGamePlayerState{}
+	return &lqproto.ResGamePlayerState{}
 }
 
 func newReqVoteGameEnd() proto.Message {
-	return &ReqVoteGameEnd{}
+	return &lqproto.ReqVoteGameEnd{}
 }
 
 func newResGameEndVote() proto.Message {
-	return &ResGameEndVote{}
+	return &lqproto.ResGameEndVote{}
 }
 
 func newReqAuthObserve() proto.Message {
-	return &ReqAuthObserve{}
+	return &lqproto.ReqAuthObserve{}
 }
 
 func newResStartObserve() proto.Message {
-	return &ResStartObserve{}
+	return &lqproto.ResStartObserve{}
 }
 
 func newNotifyNewGame() proto.Message {
-	return &NotifyNewGame{}
+	return &lqproto.NotifyNewGame{}
 }
 
 func newNotifyPlayerLoadGameReady() proto.Message {
-	return &NotifyPlayerLoadGameReady{}
+	return &lqproto.NotifyPlayerLoadGameReady{}
 }
 
 func newNotifyGameBroadcast() proto.Message {
-	return &NotifyGameBroadcast{}
+	return &lqproto.NotifyGameBroadcast{}
 }
 
 func newNotifyGameEndResult() proto.Message {
-	return &NotifyGameEndResult{}
+	return &lqproto.NotifyGameEndResult{}
 }
 
 func newNotifyGameTerminate() proto.Message {
-	return &NotifyGameTerminate{}
+	return &lqproto.NotifyGameTerminate{}
 }
 
 func newNotifyPlayerConnectionState() proto.Message {
-	return &NotifyPlayerConnectionState{}
+	return &lqproto.NotifyPlayerConnectionState{}
 }
 
 func newNotifyAccountLevelChange() proto.Message {
-	return &NotifyAccountLevelChange{}
+	return &lqproto.NotifyAccountLevelChange{}
 }
 
 func newNotifyGameFinishReward() proto.Message {
-	return &NotifyGameFinishReward{}
+	return &lqproto.NotifyGameFinishReward{}
 }
 
 func newNotifyActivityReward() proto.Message {
-	return &NotifyActivityReward{}
+	return &lqproto.NotifyActivityReward{}
 }
 
 func newNotifyActivityPoint() proto.Message {
-	return &NotifyActivityPoint{}
+	return &lqproto.NotifyActivityPoint{}
 }
 
 func newNotifyLeaderboardPoint() proto.Message {
-	return &NotifyLeaderboardPoint{}
+	return &lqproto.NotifyLeaderboardPoint{}
 }
 
 func newNotifyGamePause() proto.Message {
-	return &NotifyGamePause{}
+	return &lqproto.NotifyGamePause{}
 }
 
 func newNotifyEndGameVote() proto.Message {
-	return &NotifyEndGameVote{}
+	return &lqproto.NotifyEndGameVote{}
 }
 
 func newNotifyObserveData() proto.Message {
-	return &NotifyObserveData{}
+	return &lqproto.NotifyObserveData{}
 }

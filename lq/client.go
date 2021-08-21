@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/oscarfzs/majsoulgo"
+	"github.com/oscarfzs/majsoulgo/lqproto"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -46,7 +47,7 @@ func (client *MajsoulGameClient) CallMethod(methodFullName string, pbReq proto.M
 		return nil, err
 	}
 
-	outputName, err := majsoulgo.FindMethodOutputName(File_liqi_proto, methodFullName)
+	outputName, err := majsoulgo.FindMethodOutputName(lqproto.File_liqi_proto, methodFullName)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +103,7 @@ func (client *MajsoulGameClient) processNotification(msg []byte) {
 }
 
 func wrap(name string, msg []byte) ([]byte, error) {
-	wrapped := &Wrapper{
+	wrapped := &lqproto.Wrapper{
 		Name: fmt.Sprintf(".%s", name),
 		Data: msg,
 	}
@@ -116,7 +117,7 @@ func wrap(name string, msg []byte) ([]byte, error) {
 }
 
 func unwrap(msg []byte) (string, []byte, error) {
-	wrapped := &Wrapper{}
+	wrapped := &lqproto.Wrapper{}
 	err := proto.Unmarshal(msg, wrapped)
 	if err != nil {
 		return "", nil, err
