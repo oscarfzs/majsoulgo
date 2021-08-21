@@ -4,13 +4,13 @@ import (
 	"log"
 	"testing"
 
+	"github.com/oscarfzs/majsoulgo"
 	"github.com/oscarfzs/majsoulgo/dhs"
-	"github.com/oscarfzs/majsoulgo/mjs"
 )
 
 func TestConnect(t *testing.T) {
 	client := dhs.NewContestManagerClient()
-	url, err := mjs.GetContestManagementServerUrl()
+	url, err := majsoulgo.GetContestManagementServerUrl()
 
 	if err != nil {
 		t.Errorf(err.Error())

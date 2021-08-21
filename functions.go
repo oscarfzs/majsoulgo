@@ -1,4 +1,4 @@
-package mjsproto
+package majsoulgo
 
 import (
 	"errors"

@@ -1,4 +1,4 @@
-package mjs
+package majsoulgo
 
 func ErrorMessageByCode(code int) string {
 	err, ok := ERROR_STRINGS[code]

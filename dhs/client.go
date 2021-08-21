@@ -5,8 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/oscarfzs/majsoulgo/mjs"
-	"github.com/oscarfzs/majsoulgo/mjsproto"
+	"github.com/oscarfzs/majsoulgo"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -16,14 +15,14 @@ var (
 )
 
 type ContestManagerClient struct {
-	mjs.MajsoulChannel
+	majsoulgo.MajsoulChannel
 
 	notificationHandlers map[string][]func(pbMsg proto.Message)
 }
 
 func NewContestManagerClient() *ContestManagerClient {
 	client := new(ContestManagerClient)
-	client.MajsoulChannel = *mjs.NewMajsoulChannel()
+	client.MajsoulChannel = *majsoulgo.NewMajsoulChannel()
 	client.notificationHandlers = make(map[string][]func(pbMsg proto.Message))
 	client.SetNotificationHandler(client.processNotification)
 	return client
@@ -47,7 +46,7 @@ func (client *ContestManagerClient) CallMethod(methodFullName string, pbReq prot
 		return nil, err
 	}
 
-	outputName, err := mjsproto.FindMethodOutputName(File_dhs_proto, methodFullName)
+	outputName, err := majsoulgo.FindMethodOutputName(File_dhs_proto, methodFullName)
 	if err != nil {
 		return nil, err
 	}

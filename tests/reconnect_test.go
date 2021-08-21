@@ -5,13 +5,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/oscarfzs/majsoulgo"
 	"github.com/oscarfzs/majsoulgo/dhs"
-	"github.com/oscarfzs/majsoulgo/mjs"
 )
 
 func TestReconnect(t *testing.T) {
 	client := dhs.NewContestManagerClient()
-	url, err := mjs.GetContestManagementServerUrl()
+	url, err := majsoulgo.GetContestManagementServerUrl()
 	if err != nil {
 		log.Printf("unable to find server")
 		return

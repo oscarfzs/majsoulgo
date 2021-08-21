@@ -1,4 +1,4 @@
-package mjs
+package majsoulgo
 
 import (
 	"bytes"
