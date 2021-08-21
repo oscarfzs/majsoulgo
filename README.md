@@ -26,11 +26,12 @@ The following examples will use the contest management client (`dhs.ContestManag
 
 ### Connecting to the server
 
-Import the the `majsoulgo` and `dhs` packages:
+Import the the `majsoulgo`, `dhs`, and `dhsproto` packages:
 ```go
 import (
     "github.com/oscarfzs/majsoulgo"
     "github.com/oscarfzs/dhs"
+    "github.com/oscarfzs/dhsproto"
 )
 ```
 
@@ -59,7 +60,7 @@ err = client.ExitValue()
 ### Sending and receiving messages
 
 ```go
-req := &dhs.ReqContestManageOauth2Login{
+req := &dhsproto.ReqContestManageOauth2Login{
     Type: 10,
     AccessToken: "YOUR-TOKEN-HERE"
 }
@@ -76,13 +77,13 @@ log.Println(res)
 ```go
 //Run this function whenever we receive a dhs.NotifyContestGameEnd message from the server
 func foo(pbMsg proto.Message) {
-    msg := pbMsg.(*dhs.NotifyContestGameEnd)  //convert the protobuf message in order to access its fields.
+    msg := pbMsg.(*dhsproto.NotifyContestGameEnd)  //convert the protobuf message in order to access its fields.
     log.Println(msg.game_uuid)
 }
 ```
 
 ```go
-client.AddNotificationHandler(&dhs.NotifyContestGameEnd{}, foo)
+client.AddNotificationHandler(&dhsproto.NotifyContestGameEnd{}, foo)
 ```
 
 ## Additional Links
