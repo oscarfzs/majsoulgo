@@ -6,6 +6,7 @@ MajsoulGo is a module for connecting to and communicating with Mahjong Soul's ga
   * [Connecting to the server](#connecting-to-the-server)
   * [Sending and receiving messages](#sending-and-receiving-messages)
   * [Handling notifications](#handling-notifications)
+- [Additional Links](#additional-links)
 
 ## Getting Started
 
@@ -73,3 +74,11 @@ func foo(pbMsg proto.Message) {
 ```go
 client.AddNotificationHandler(&dhs.NotifyContestGameEnd{}, foo)
 ```
+
+## Additional Links
+
+https://github.com/takayama-lily/mjsoul
+
+https://github.com/MahjongRepository/mahjong_soul_api
+
+https://github.com/cozziekuns/Akane
