@@ -2,6 +2,7 @@
 
 MajsoulGo is a module for connecting to and communicating with Mahjong Soul's game servers and contest management servers.
 
+- [Installation](#installation)
 - [Getting Started](#getting-started)
   * [Connecting to the server](#connecting-to-the-server)
   * [Sending and receiving messages](#sending-and-receiving-messages)
