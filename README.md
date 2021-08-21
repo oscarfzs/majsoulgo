@@ -11,7 +11,7 @@ MajsoulGo is a module for connecting to and communicating with Mahjong Soul's ga
 
 ## Installation
 
-If you have not downloaded and setup Go, you do so here: [https://golang.org/doc/install](https://golang.org/doc/install)
+If you have not downloaded Go, you can do so here: [https://golang.org/doc/install](https://golang.org/doc/install)
 
 To install majsoulgo, type this shell command:
 ```
